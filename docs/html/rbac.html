@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Role Based Access Control (RBAC) &mdash; dhl-resubmission 1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Administrative Reference matrix" href="reference.html" />
+    <link rel="prev" title="High Availability" href="high_availability.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            dhl-resubmission
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="compatibility.html">Compatibility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="deployment.html">Deployment and base configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration_http.html">HTTP SOAP configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration_mq.html">MQ configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="high_availability.html">High Availability</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Role Based Access Control (RBAC)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#builtin-roles">Builtin roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#providing-rbac-access-for-submitters-approvers">Providing RBAC access for submitters &amp; approvers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#based-permissions-to-submit-and-approve-messages">Based permissions to submit and approve messages</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#providing-rbac-access-for-submitters">Providing RBAC access for submitters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#providing-rbac-access-for-approvers">Providing RBAC access for approvers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#superadmin-roles">Superadmin roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rbac-by-the-example">RBAC by the example</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submitting-example">Submitting example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#validating-example">Validating example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Administrative Reference matrix</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="userguide.html">User guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development and build process</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dhl-resubmission</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Role Based Access Control (RBAC)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/rbac.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="role-based-access-control-rbac">
+<h1>Role Based Access Control (RBAC)<a class="headerlink" href="#role-based-access-control-rbac" title="Permalink to this heading">¶</a></h1>
+<section id="builtin-roles">
+<h2>Builtin roles<a class="headerlink" href="#builtin-roles" title="Permalink to this heading">¶</a></h2>
+<p><strong>The application embedds different roles as part of its configuration, which would used via inheritance to provide access and permissions to the application and its sub-components.</strong></p>
+<p><strong>The emebedded roles are:</strong></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Role</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mqsubmission</span></code></p></td>
+<td><p>provides access to the application for a submitter or an approver for MQ</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">httpsubmission</span></code></p></td>
+<td><p>provides access to the application for a submitter or an approver for SOAP HTTP(s)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mqsubmission_superadmin</span></code></p></td>
+<td><p>provides access to the application and grants permissions to manage batches of all applications for MQ</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">httpsubmission_superadmin</span></code></p></td>
+<td><p>provides access to the application and grants permissions to manage batches of all applications for HTTP(s) SOAP</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="providing-rbac-access-for-submitters-approvers">
+<h2>Providing RBAC access for submitters &amp; approvers<a class="headerlink" href="#providing-rbac-access-for-submitters-approvers" title="Permalink to this heading">¶</a></h2>
+<section id="based-permissions-to-submit-and-approve-messages">
+<h3>Based permissions to submit and approve messages<a class="headerlink" href="#based-permissions-to-submit-and-approve-messages" title="Permalink to this heading">¶</a></h3>
+<p><strong>A typical submitter user for MQ and SOAR would need to inherit from the following builtin roles:</strong></p>
+<p><strong>Users who should be able to submit messages and manage batches should inherit from these builtin roles:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mqsubmission</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">httpsubmission</span></code></p></li>
+</ul>
+<p><strong>These roles provides:</strong></p>
+<ul class="simple">
+<li><p>Access to frontend custom commands allowing to interract with the applications (such as calling the putmqrelay / puthttprelay commands to submit messages)</p></li>
+<li><p>Access with write permission to the related KVstore collections and any other Splunk Knowledge objects needed</p></li>
+</ul>
+</section>
+</section>
+<section id="providing-rbac-access-for-submitters">
+<h2>Providing RBAC access for submitters<a class="headerlink" href="#providing-rbac-access-for-submitters" title="Permalink to this heading">¶</a></h2>
+<p><strong>Submitters should be a member of one or more submitter roles, based on the following convention:</strong></p>
+<p><em>For MQ:</em></p>
+<ul class="simple">
+<li><p>mqsubmission_&lt;applicationName&gt;_submitter</p></li>
+</ul>
+<p><em>For SOAP:</em></p>
+<ul class="simple">
+<li><p>httpsubmission_&lt;applicationName&gt;_submitter</p></li>
+</ul>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Explicit role membership</p>
+<ul class="simple">
+<li><p>Submitters need to be an explicit member of the role</p></li>
+<li><p>Inheritance is not supported</p></li>
+<li><p>The association with a given application is made by extracting the application name from the convention</p></li>
+<li><p>Backends verify the user role membership to allow or deny the operation</p></li>
+<li><p>The different user interfaces also filter automatically on the messages users can see based on their roles membership</p></li>
+<li><p>Finally, roles are lower case only, therefore the application names are systematically converted to lower case</p></li>
+</ul>
+</div>
+</section>
+<section id="providing-rbac-access-for-approvers">
+<h2>Providing RBAC access for approvers<a class="headerlink" href="#providing-rbac-access-for-approvers" title="Permalink to this heading">¶</a></h2>
+<p>When messages are submitted for reprocessing to MQ or HTTP(s) SOAP, messages are associated with a batch identifier and stored in a transilient state “pending”.
+Messages will be processed to the destination as soon as the batches have been allowed by approvers.</p>
+<p><strong>The following convention is used to identify if a user is allowed to approve a batch, this convention relies on the user’s roles membership:</strong></p>
+<p><em>For MQ:</em></p>
+<ul class="simple">
+<li><p>mqsubmission_&lt;applicationName&gt;_approver</p></li>
+</ul>
+<p><em>For SOAP:</em></p>
+<ul class="simple">
+<li><p>httpsubmission_&lt;applicationName&gt;_approver</p></li>
+</ul>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Explicit role membership</p>
+<ul class="simple">
+<li><p>Approvers need to be an explicit member of the role</p></li>
+<li><p>Inheritance is not supported</p></li>
+<li><p>The association with a given application is made by extracting the application name from the convention</p></li>
+<li><p>Backends verify the user role membership to allow or deny the operation</p></li>
+<li><p>Finally, roles are lower case only, therefore the application names are systematically converted to lower case</p></li>
+</ul>
+</div>
+</section>
+<section id="superadmin-roles">
+<h2>Superadmin roles<a class="headerlink" href="#superadmin-roles" title="Permalink to this heading">¶</a></h2>
+<p>In addition, the super admin roles allow a user member of it to submit and manage any kind of message, no matter the associated application.</p>
+<p><em>For MQ:</em></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mqsubmission_superadmin</span></code></p></li>
+</ul>
+<p><em>For SOAP:</em></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">httpsubmission_superadmin</span></code></p></li>
+</ul>
+</section>
+<section id="rbac-by-the-example">
+<h2>RBAC by the example<a class="headerlink" href="#rbac-by-the-example" title="Permalink to this heading">¶</a></h2>
+<p>For the purpose of the documentation, we have two users:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">jsmith</span></code> who is a submiter user for an application named “ESB”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jdoe</span></code> who is an approver user for that same application</p></li>
+</ul>
+<section id="submitting-example">
+<h3>Submitting example<a class="headerlink" href="#submitting-example" title="Permalink to this heading">¶</a></h3>
+<p>Our submitter user is a member of the roles:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mqsubmission_esb_submitter</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">httpsubmission_esb_submitter</span></code></p></li>
+</ul>
+<p>Our user <code class="docutils literal notranslate"><span class="pre">jsmith</span></code> has submitted a batch for reprocessing, the manage batch UI shows the pending status of the batch:</p>
+<a class="with-border reference internal image-reference" href="_images/rbac_demo1.png"><img alt="rbac_demo1.png" class="with-border align-center" src="_images/rbac_demo1.png" style="width: 1200px;" /></a>
+<p>The user is not allowed to manage the batch himself, therefore the user cannot validate the processing nor cancel or delete the batch, the UI should show the following message:</p>
+<a class="with-border reference internal image-reference" href="_images/rbac_demo2.png"><img alt="rbac_demo2.png" class="with-border align-center" src="_images/rbac_demo2.png" style="width: 1200px;" /></a>
+</section>
+<section id="validating-example">
+<h3>Validating example<a class="headerlink" href="#validating-example" title="Permalink to this heading">¶</a></h3>
+<p>Our approver user is a member of the roles:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mqsubmission_esb_approver</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">httpsubmission_esb_approver</span></code></p></li>
+</ul>
+<p>Our user <code class="docutils literal notranslate"><span class="pre">jdoe</span></code> can effectively manage the pending batch:</p>
+<a class="with-border reference internal image-reference" href="_images/rbac_demo3.png"><img alt="rbac_demo3.png" class="with-border align-center" src="_images/rbac_demo3.png" style="width: 1200px;" /></a>
+<a class="with-border reference internal image-reference" href="_images/rbac_demo4.png"><img alt="rbac_demo4.png" class="with-border align-center" src="_images/rbac_demo4.png" style="width: 1200px;" /></a>
+<p><strong>After some minutes, messages have been processed successfully, the batch is now terminated:</strong></p>
+<a class="with-border reference internal image-reference" href="_images/rbac_demo5.png"><img alt="rbac_demo5.png" class="with-border align-center" src="_images/rbac_demo5.png" style="width: 1200px;" /></a>
+<p>Our user can also decide to purge the batch once it has been processed:</p>
+<a class="with-border reference internal image-reference" href="_images/rbac_demo6.png"><img alt="rbac_demo6.png" class="with-border align-center" src="_images/rbac_demo6.png" style="width: 1200px;" /></a>
+<p>Or cancel another pending batch which should finally not be processed:</p>
+<a class="with-border reference internal image-reference" href="_images/rbac_demo7.png"><img alt="rbac_demo7.png" class="with-border align-center" src="_images/rbac_demo7.png" style="width: 1200px;" /></a>
+<a class="with-border reference internal image-reference" href="_images/rbac_demo8.png"><img alt="rbac_demo8.png" class="with-border align-center" src="_images/rbac_demo8.png" style="width: 1200px;" /></a>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="high_availability.html" class="btn btn-neutral float-left" title="High Availability" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="reference.html" class="btn btn-neutral float-right" title="Administrative Reference matrix" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, DHL.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

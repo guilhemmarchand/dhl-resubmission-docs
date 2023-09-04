@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Development and build process &mdash; dhl-resubmission 1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Release notes" href="releasenotes.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            dhl-resubmission
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="compatibility.html">Compatibility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="deployment.html">Deployment and base configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration_http.html">HTTP SOAP configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration_mq.html">MQ configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="high_availability.html">High Availability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rbac.html">Role Based Access Control (RBAC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scaling.html">High Scale Volume</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="userguide.html">User guide</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Development and build process</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dependencies-for-developers">Dependencies for developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ucc-gen-and-updating-applications">ucc-gen and updating applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mq-developments-with-docker">MQ developments with Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#soap-api-developments">SOAP API developments</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dhl-resubmission</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Development and build process</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/development.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="development-and-build-process">
+<h1>Development and build process<a class="headerlink" href="#development-and-build-process" title="Permalink to this heading">¶</a></h1>
+<p><strong>The Application is built on top of the Splunk Addon factory generator, which allows to build and maintain consistent and modular Splunk applications using the most up to date content:</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/splunk/addonfactory-ucc-generator">https://github.com/splunk/addonfactory-ucc-generator</a></p></li>
+<li><p><a class="reference external" href="https://splunk.github.io/addonfactory-ucc-generator/">https://splunk.github.io/addonfactory-ucc-generator/</a></p></li>
+</ul>
+<p>For development purposes, different dependencies should be installed on the development platform, as follows.</p>
+<section id="dependencies-for-developers">
+<h2>Dependencies for developers<a class="headerlink" href="#dependencies-for-developers" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Operating system: Linux or MacOS (seriously, what else?)</p></li>
+<li><p>Access to the machine in terminal (SSH if remote)</p></li>
+<li><p>Python 3.7 or later</p></li>
+<li><p>Splunk ucc-gen</p></li>
+</ul>
+</section>
+<section id="ucc-gen-and-updating-applications">
+<h2>ucc-gen and updating applications<a class="headerlink" href="#ucc-gen-and-updating-applications" title="Permalink to this heading">¶</a></h2>
+<p><strong>The development of the Splunk applications relies on the Splunk UCC generator:</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/splunk/addonfactory-ucc-generator">https://github.com/splunk/addonfactory-ucc-generator</a></p></li>
+<li><p><a class="reference external" href="https://splunk.github.io/addonfactory-ucc-generator/">https://splunk.github.io/addonfactory-ucc-generator/</a></p></li>
+</ul>
+<p><strong>When performing changes in the application, you will:</strong></p>
+<ul class="simple">
+<li><p>update the <code class="docutils literal notranslate"><span class="pre">version.json</span></code> file to increment the version release number</p></li>
+<li><p>perform your changes effectively, by managing files in the <code class="docutils literal notranslate"><span class="pre">&lt;application_name&gt;/package</span></code> directory (such as modifying a view, etc)</p></li>
+<li><p>run the ucc-gen command via a shell wrapper:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">&lt;</span><span class="n">application_name</span><span class="o">&gt;/</span><span class="n">build</span>
+<span class="n">python3</span> <span class="n">build</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">keep</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>This produces automatically a new packaged application, located in the <code class="docutils literal notranslate"><span class="pre">&lt;application_name&gt;/output/</span></code> directory</p></li>
+<li><p>The tgz package is ignored in GitHub on purpose, you will take this new tarball archive, publish it as a new release in the repository releases, and finally deploy to your Splunk environment</p></li>
+</ul>
+<p><em>example:</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">application_name</span><span class="o">&gt;/</span>
+<span class="o">&lt;</span><span class="n">application_name</span><span class="o">&gt;</span><span class="n">_</span><span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="n">_</span><span class="o">&lt;</span><span class="n">build</span><span class="o">&gt;.</span><span class="n">tgz</span>
+<span class="n">release</span><span class="o">-</span><span class="n">sha256</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>the content of the directory is the uncompress content from the generated package (and is ignored in Git on purpose too)</p></li>
+<li><p>the tgz file is the package to be released in GitHub, and deployed to Splunk</p></li>
+</ul>
+</section>
+<section id="mq-developments-with-docker">
+<h2>MQ developments with Docker<a class="headerlink" href="#mq-developments-with-docker" title="Permalink to this heading">¶</a></h2>
+<p><strong>For easy and modern developping purposes, one can easily bootstrap an environment including Splunk and MQ-Series using docker, for your convenience, a docker-compose.yml example is shared as follows:</strong></p>
+<p><em>docker-compose.yml, adapt to your needs, create or remove local storage references as needed:</em></p>
+<p><em>the following docker configuration allows bootstrapping a ready to be used MQ manager:</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">version</span><span class="p">:</span> <span class="s2">&quot;3.8&quot;</span>
+
+<span class="c1"># services</span>
+<span class="n">services</span><span class="p">:</span>
+
+<span class="c1"># IBM MQ</span>
+<span class="n">mq1</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">ibmcom</span><span class="o">/</span><span class="n">mq</span><span class="p">:</span><span class="n">latest</span>
+    <span class="n">hostname</span><span class="p">:</span> <span class="n">mq1</span>
+    <span class="n">ports</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;1414:1414&quot;</span>
+    <span class="o">-</span> <span class="s2">&quot;9443:9443&quot;</span>
+    <span class="n">environment</span><span class="p">:</span>
+    <span class="n">LICENSE</span><span class="p">:</span> <span class="s2">&quot;accept&quot;</span>
+    <span class="n">MQ_QMGR_NAME</span><span class="p">:</span> <span class="s2">&quot;QM1&quot;</span>
+    <span class="n">MQ_ADMIN_PASSWORD</span><span class="p">:</span> <span class="s2">&quot;gv51JMYghk1D5%M9&quot;</span>
+    <span class="n">MQSNOAUT</span><span class="p">:</span> <span class="s1">&#39;YES&#39;</span>
+    <span class="c1"># If the following is set, authentication will be required</span>
+    <span class="c1">#MQ_APP_PASSWORD: &quot;passw0rd&quot;</span>
+    <span class="n">volumes</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;qm1data:/mnt/mqm:rw&quot;</span>
+
+<span class="n">volumes</span><span class="p">:</span>
+<span class="n">qm1data</span><span class="p">:</span> <span class="p">{}</span>
+</pre></div>
+</div>
+</section>
+<section id="soap-api-developments">
+<h2>SOAP API developments<a class="headerlink" href="#soap-api-developments" title="Permalink to this heading">¶</a></h2>
+<p><strong>The following Docker configuration were used to bootstap a SOAP API, with an nginx reverse proxy for the SSL layer:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">version</span><span class="p">:</span> <span class="s2">&quot;3.8&quot;</span>
+<span class="n">services</span><span class="p">:</span>
+
+<span class="n">soap</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">python</span><span class="p">:</span><span class="n">latest</span>
+    <span class="n">restart</span><span class="p">:</span> <span class="n">unless</span><span class="o">-</span><span class="n">stopped</span>
+    <span class="n">hostname</span><span class="p">:</span> <span class="n">soap</span>
+    <span class="n">volumes</span><span class="p">:</span>
+    <span class="o">-</span> <span class="o">./</span><span class="n">soap</span><span class="p">:</span><span class="o">/</span><span class="n">soap</span>
+    <span class="n">command</span><span class="p">:</span> <span class="s2">&quot;/soap/run.sh&quot;</span>
+    <span class="c1">#command: &quot;tail -f /dev/null&quot;</span>
+
+<span class="c1"># Nginx acting as the SSL proxy</span>
+<span class="n">nginx</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">nginx</span><span class="p">:</span><span class="n">latest</span>
+    <span class="n">restart</span><span class="p">:</span> <span class="n">unless</span><span class="o">-</span><span class="n">stopped</span>
+    <span class="n">hostname</span><span class="p">:</span> <span class="n">nginx</span>
+    <span class="n">volumes</span><span class="p">:</span>
+    <span class="o">-</span> <span class="o">./</span><span class="n">nginx</span><span class="o">/</span><span class="n">default</span><span class="o">.</span><span class="n">conf</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">default</span><span class="o">.</span><span class="n">conf</span>
+    <span class="o">-</span> <span class="o">./</span><span class="n">nginx</span><span class="o">/</span><span class="n">ssl</span><span class="o">.</span><span class="n">cert</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">cert</span><span class="o">/</span><span class="n">ssl</span><span class="o">.</span><span class="n">cert</span>
+    <span class="o">-</span> <span class="o">./</span><span class="n">nginx</span><span class="o">/</span><span class="n">ssl</span><span class="o">.</span><span class="n">key</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">cert</span><span class="o">/</span><span class="n">ssl</span><span class="o">.</span><span class="n">key</span>
+    <span class="o">-</span> <span class="o">./</span><span class="n">nginx</span><span class="o">/.</span><span class="n">htpasswd</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/.</span><span class="n">htpasswd</span>
+    <span class="n">ports</span><span class="p">:</span>
+    <span class="o">-</span> <span class="mi">8081</span><span class="p">:</span><span class="mi">8081</span>
+    <span class="o">-</span> <span class="mi">443</span><span class="p">:</span><span class="mi">443</span>
+</pre></div>
+</div>
+<p>Which requires the following content in the directory “soap”:</p>
+<dl class="simple">
+<dt>soap/</dt><dd><p>run.sh
+run.py</p>
+</dd>
+<dt>nginx/</dt><dd><p>default.conf
+ssl.cert
+ssl.key</p>
+</dd>
+</dl>
+<p><em>File run.sh:</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">flask</span>
+<span class="n">python3</span> <span class="o">/</span><span class="n">soap</span><span class="o">/</span><span class="n">run</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p><em>File soap/run.py:</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">make_response</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/soap-endpoint&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">soap_endpoint</span><span class="p">():</span>
+    <span class="c1"># Get the XML data sent to the server</span>
+    <span class="n">xml_data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">data</span>
+
+    <span class="c1"># Here you can parse the XML and construct a response or just print it</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">xml_data</span><span class="p">)</span>
+
+    <span class="c1"># For the purpose of this demonstration, let&#39;s return a generic SOAP response.</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="s2">&lt;ns63:ShpPcdDetailsMsg xmlns:ns63=&quot;http://www.dhl.com/Express/CM/CM_ShpPcsDetailsMsg/v2&quot; xmlns:OAGIS=&quot;http://www.openapplications.org/oagis/9&quot; xmlns:ns5=&quot;http://www.dhl.com/Express/CM/CM_GenericRequest/v2&quot;&gt;</span>
+<span class="s2">&lt;Hdr Id=&quot;593ae885-907e-4cb0-aa50-eb16540e4f10&quot; Ver=&quot;2.001&quot; Dtm=&quot;2023-06-08T07:08:15&quot;&gt;</span>
+<span class="s2">    &lt;GI&gt;</span>
+<span class="s2">    &lt;TID Src=&quot;ESB&quot; TID=&quot;e7c35e05-4cb6-496b-aa72-b2eaa820fc97&quot;/&gt;</span>
+<span class="s2">    &lt;/GI&gt;</span>
+<span class="s2">    &lt;Sndr AppCd=&quot;ESB&quot; AppVer=&quot;3.0&quot; AppNm=&quot;ESB&quot;/&gt;</span>
+<span class="s2">    &lt;Rcp AppCd=&quot;ESB&quot; AppVer=&quot;1.0&quot; AppNm=&quot;ESB&quot;&gt;</span>
+<span class="s2">    &lt;GId Id=&quot;46069296&quot; IdTp=&quot;RQMSGID&quot;/&gt;</span>
+<span class="s2">    &lt;/Rcp&gt;</span>
+<span class="s2">    &lt;Orgntr AppCd=&quot;EAPI&quot; AppVer=&quot;1.0&quot; AppNm=&quot;MYDHL API&quot;/&gt;</span>
+<span class="s2">&lt;/Hdr&gt;</span>
+<span class="s2">&lt;Bd/&gt;</span>
+<span class="s2">&lt;RespStatus&gt;</span>
+<span class="s2">    &lt;GI CorrId=&quot;1931182186&quot;/&gt;</span>
+<span class="s2">    &lt;Sev&gt;10&lt;/Sev&gt;</span>
+<span class="s2">    &lt;MsgCIgd&gt;200000&lt;/MsgCIgd&gt;</span>
+<span class="s2">    &lt;MsgClg&gt;IPESB&lt;/MsgClg&gt;</span>
+<span class="s2">    &lt;Dsc&gt;ShpKey is Valid.&lt;/Dsc&gt;</span>
+<span class="s2">    &lt;DtlDsc&gt;shipment key is used: 1931182186&lt;/DtlDsc&gt;</span>
+<span class="s2">&lt;/RespStatus&gt;</span>
+<span class="s2">&lt;RespStatus&gt;</span>
+<span class="s2">    &lt;Sev&gt;10&lt;/Sev&gt;</span>
+<span class="s2">    &lt;MsgCIgd&gt;200200&lt;/MsgCIgd&gt;</span>
+<span class="s2">    &lt;MsgClg&gt;1931182186&lt;/MsgClg&gt;</span>
+<span class="s2">    &lt;Dsc&gt;Successfully put to DCVS3_ASIA MQ Queue. Response code: 0&lt;/Dsc&gt;</span>
+<span class="s2">    &lt;DtlDsc&gt;IPESB&lt;/DtlDsc&gt;</span>
+<span class="s2">&lt;/RespStatus&gt;</span>
+<span class="s2">&lt;RespStatus&gt;</span>
+<span class="s2">    &lt;GI CorrId=&quot;46069296&quot;/&gt;</span>
+<span class="s2">    &lt;Sev&gt;10&lt;/Sev&gt;</span>
+<span class="s2">    &lt;MsgCIgd&gt;100000&lt;/MsgCIgd&gt;</span>
+<span class="s2">    &lt;MsgClg&gt;IPESB&lt;/MsgClg&gt;</span>
+<span class="s2">    &lt;Dsc&gt;Service operation execution finished successfully&lt;/Dsc&gt;</span>
+<span class="s2">    &lt;DtlDsc&gt;Service operation execution finished successfully&lt;/DtlDsc&gt;</span>
+<span class="s2">    &lt;RpBy CmptNm=&quot;ShipmentManagement.ShipmentManifestProvider_v4&quot;/&gt;</span>
+<span class="s2">&lt;/RespStatus&gt;</span>
+<span class="s2">&lt;/ns63:ShpPcdDetailsMsg&gt;&quot;&quot;&quot;</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;text/xml&#39;</span>
+    <span class="k">return</span> <span class="n">response</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>File nginx/default.conf:</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="p">{</span>
+        <span class="n">listen</span> <span class="mi">8081</span><span class="p">;</span>
+        <span class="n">listen</span> <span class="p">[::]:</span><span class="mi">8081</span><span class="p">;</span>
+
+        <span class="n">access_log</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">reverse</span><span class="o">-</span><span class="n">access</span><span class="o">.</span><span class="n">log</span><span class="p">;</span>
+        <span class="n">error_log</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">reverse</span><span class="o">-</span><span class="n">error</span><span class="o">.</span><span class="n">log</span><span class="p">;</span>
+
+
+        <span class="n">ssl</span> <span class="n">on</span><span class="p">;</span>
+        <span class="n">ssl_certificate</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">cert</span><span class="o">/</span><span class="n">ssl</span><span class="o">.</span><span class="n">cert</span><span class="p">;</span>
+        <span class="n">ssl_certificate_key</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">cert</span><span class="o">/</span><span class="n">ssl</span><span class="o">.</span><span class="n">key</span><span class="p">;</span>
+
+    <span class="n">client_max_body_size</span> <span class="mi">64</span><span class="n">M</span><span class="p">;</span>
+
+        <span class="n">location</span> <span class="o">/</span> <span class="p">{</span>
+                    <span class="n">auth_basic</span> <span class="s2">&quot;Restricted Content&quot;</span><span class="p">;</span>
+            <span class="n">auth_basic_user_file</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/.</span><span class="n">htpasswd</span><span class="p">;</span>
+            <span class="n">proxy_pass</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">soap</span><span class="p">:</span><span class="mi">5000</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Finally, the ssl.cert and ssl.key are simply self-signed SSL certificate and no passphase private key created for the purpose of the SSL layer.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="releasenotes.html" class="btn btn-neutral float-left" title="Release notes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, DHL.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

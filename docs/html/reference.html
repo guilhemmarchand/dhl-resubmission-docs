@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administrative Reference matrix &mdash; dhl-resubmission 1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="User guide" href="userguide.html" />
+    <link rel="prev" title="Role Based Access Control (RBAC)" href="rbac.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            dhl-resubmission
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="compatibility.html">Compatibility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="deployment.html">Deployment and base configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">MQ managers Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="high_availability.html">High Availability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rbac.html">Role Based Access Control (RBAC)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Administrative Reference matrix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#scheduled-alerts-and-reports">Scheduled Alerts and reports</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#scheduled-alerts-reference">Scheduled alerts reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dhl-mq-messages-publishing-relay-publishing">DHL MQ messages publishing - relay publishing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dhl-mq-messages-publishing-batch-failing-detected">DHL MQ messages publishing - batch failing detected</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dhl-mq-messages-publishing-batch-is-pending-from-approval">DHL MQ messages publishing - batch is pending from approval</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dhl-mq-ha-group-registered-consumer-is-offline">DHL MQ HA group - registered consumer is offline</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#scheduled-reports-reference">Scheduled reports reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dhl-mq-maintenance-purge-records-from-the-main-mq-backlog-kvstore-collection">DHL MQ maintenance - purge records from the main MQ backlog KVstore collection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dhl-mq-messages-publishing-batch-relay-publishing-for-singleline-messages">DHL MQ messages publishing - batch relay publishing for singleline messages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dhl-mq-maintenance-clean-any-remaining-files-in-massbatch-and-batch-folders">DHL MQ maintenance - clean any remaining files in massbatch and batch folders</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dhl-mq-maintenance-purge-old-records-from-the-local-cache-of-the-consumers">DHL MQ maintenance - purge old records from the local cache of the consumers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dhl-mq-messages-publishing-batch-relay-flush-successfully-procedded-records">DHL MQ messages publishing - batch relay flush successfully procedded records</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dhl-mq-ha-group-send-keepalive-consumer">DHL MQ HA group - send keepalive consumer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dhl-mq-ha-group-get-ha-groups-from-remote-storage">DHL MQ HA group - get ha groups from remote storage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dhl-mq-ha-group-manager-group-election">DHL MQ HA group - manager group election</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="userguide.html">User guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development and build process</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dhl-resubmission</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Administrative Reference matrix</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/reference.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="administrative-reference-matrix">
+<h1>Administrative Reference matrix<a class="headerlink" href="#administrative-reference-matrix" title="Permalink to this heading">¶</a></h1>
+<section id="scheduled-alerts-and-reports">
+<h2>Scheduled Alerts and reports<a class="headerlink" href="#scheduled-alerts-and-reports" title="Permalink to this heading">¶</a></h2>
+<section id="scheduled-alerts-reference">
+<h3>Scheduled alerts reference<a class="headerlink" href="#scheduled-alerts-reference" title="Permalink to this heading">¶</a></h3>
+<section id="dhl-mq-messages-publishing-relay-publishing">
+<h4>DHL MQ messages publishing - relay publishing<a class="headerlink" href="#dhl-mq-messages-publishing-relay-publishing" title="Permalink to this heading">¶</a></h4>
+<p><strong>This is the main modular alert which handles submission to MQ for:</strong></p>
+<ul class="simple">
+<li><p>Batches of multi-line messages (the field <code class="docutils literal notranslate"><span class="pre">multiline</span></code> in the KVstore contains the boolean with value <code class="docutils literal notranslate"><span class="pre">1</span></code>)</p></li>
+<li><p>Re-attempt for submission failures for both single-line and multi-line messages</p></li>
+</ul>
+<p><strong>SHC versus HF:</strong></p>
+<ul class="simple">
+<li><p>SHC: This alert does nothing on the SHC, and can be safety disabled</p></li>
+<li><p>HF: This alert performs the submission to IBM MQ</p></li>
+</ul>
+</section>
+<section id="dhl-mq-messages-publishing-batch-failing-detected">
+<h4>DHL MQ messages publishing - batch failing detected<a class="headerlink" href="#dhl-mq-messages-publishing-batch-failing-detected" title="Permalink to this heading">¶</a></h4>
+<p><strong>This is an out of the box alert to detect when a batch is failing, either temporary or permanently.</strong></p>
+<p><strong>SHC versus HF:</strong></p>
+<ul class="simple">
+<li><p>SHC: This alert is to be running on the search head layer</p></li>
+<li><p>HF: This alert will not do anything on the HFs</p></li>
+</ul>
+</section>
+<section id="dhl-mq-messages-publishing-batch-is-pending-from-approval">
+<h4>DHL MQ messages publishing - batch is pending from approval<a class="headerlink" href="#dhl-mq-messages-publishing-batch-is-pending-from-approval" title="Permalink to this heading">¶</a></h4>
+<p><strong>This is an out of the box alert to detect when a batch was submitted and is pending for approval.</strong></p>
+<p><strong>SHC versus HF:</strong></p>
+<ul class="simple">
+<li><p>SHC: This alert is to be running on the search head layer</p></li>
+<li><p>HF: This alert will not do anything on the HFs</p></li>
+</ul>
+</section>
+<section id="dhl-mq-ha-group-registered-consumer-is-offline">
+<h4>DHL MQ HA group - registered consumer is offline<a class="headerlink" href="#dhl-mq-ha-group-registered-consumer-is-offline" title="Permalink to this heading">¶</a></h4>
+<p><strong>This is an out of the box alert to detect when a consumer is offline.</strong></p>
+<p><strong>SHC versus HF:</strong></p>
+<ul class="simple">
+<li><p>SHC: This alert is to be running on the search head layer</p></li>
+<li><p>HF: This alert will not do anything on the HFs</p></li>
+</ul>
+</section>
+</section>
+<section id="scheduled-reports-reference">
+<h3>Scheduled reports reference<a class="headerlink" href="#scheduled-reports-reference" title="Permalink to this heading">¶</a></h3>
+<section id="dhl-mq-maintenance-purge-records-from-the-main-mq-backlog-kvstore-collection">
+<h4>DHL MQ maintenance - purge records from the main MQ backlog KVstore collection<a class="headerlink" href="#dhl-mq-maintenance-purge-records-from-the-main-mq-backlog-kvstore-collection" title="Permalink to this heading">¶</a></h4>
+<p><strong>This scheduled reports purges the old records from the main MQ backlog KVstore collection according to the KVstore eviction and retention policy.</strong></p>
+<p><strong>SHC versus HF:</strong></p>
+<ul class="simple">
+<li><p>SHC: This report runs on the search head layer</p></li>
+<li><p>HF: This report does nothing on the consumers and can be safety disabled if necessary</p></li>
+</ul>
+</section>
+<section id="dhl-mq-messages-publishing-batch-relay-publishing-for-singleline-messages">
+<h4>DHL MQ messages publishing - batch relay publishing for singleline messages<a class="headerlink" href="#dhl-mq-messages-publishing-batch-relay-publishing-for-singleline-messages" title="Permalink to this heading">¶</a></h4>
+<p><strong>This scheduled reports handles the MQ submission for singleline messages sent in mass batches.</strong></p>
+<p><strong>SHC versus HF:</strong></p>
+<ul class="simple">
+<li><p>SHC: This report is designed for Heavy Forwarders, it does nothing on the search head layer and can be safety disabled</p></li>
+<li><p>HF: This report runs on the HF</p></li>
+</ul>
+</section>
+<section id="dhl-mq-maintenance-clean-any-remaining-files-in-massbatch-and-batch-folders">
+<h4>DHL MQ maintenance - clean any remaining files in massbatch and batch folders<a class="headerlink" href="#dhl-mq-maintenance-clean-any-remaining-files-in-massbatch-and-batch-folders" title="Permalink to this heading">¶</a></h4>
+<p><strong>This is a maintenance report which ensures that there are no orphans left by the submission processus on the Heavy Forwarders.</strong></p>
+<p><strong>SHC versus HF:</strong></p>
+<ul class="simple">
+<li><p>SHC: This report is designed for Heavy Forwarders, it does nothing on the search head layer and can be safety disabled</p></li>
+<li><p>HF: This report runs on the HF</p></li>
+</ul>
+</section>
+<section id="dhl-mq-maintenance-purge-old-records-from-the-local-cache-of-the-consumers">
+<h4>DHL MQ maintenance - purge old records from the local cache of the consumers<a class="headerlink" href="#dhl-mq-maintenance-purge-old-records-from-the-local-cache-of-the-consumers" title="Permalink to this heading">¶</a></h4>
+<p><strong>This is a maintenance report which purges old records from the local cache consumers. (by default, records older than 48hours)</strong></p>
+<p><strong>SHC versus HF:</strong></p>
+<ul class="simple">
+<li><p>SHC: This report is designed for Heavy Forwarders, it does nothing on the search head layer and can be safety disabled</p></li>
+<li><p>HF: This report runs on the HF</p></li>
+</ul>
+</section>
+<section id="dhl-mq-messages-publishing-batch-relay-flush-successfully-procedded-records">
+<h4>DHL MQ messages publishing - batch relay flush successfully procedded records<a class="headerlink" href="#dhl-mq-messages-publishing-batch-relay-flush-successfully-procedded-records" title="Permalink to this heading">¶</a></h4>
+<p><strong>This is a maintenance report which flushed every 2 minutes the successfully proceeded records for the remote KVstore and the local consumer cache.</strong></p>
+<p><strong>SHC versus HF:</strong></p>
+<ul class="simple">
+<li><p>SHC: This report is designed for Heavy Forwarders, it does nothing on the search head layer and can be safety disabled</p></li>
+<li><p>HF: This report runs on the HF</p></li>
+</ul>
+</section>
+<section id="dhl-mq-ha-group-send-keepalive-consumer">
+<h4>DHL MQ HA group - send keepalive consumer<a class="headerlink" href="#dhl-mq-ha-group-send-keepalive-consumer" title="Permalink to this heading">¶</a></h4>
+<p><strong>This scheduled report sends a keep alive information to the SHC, and is used for High availability purposes.</strong></p>
+<p><strong>SHC versus HF:</strong></p>
+<ul class="simple">
+<li><p>SHC: This report is designed for Heavy Forwarders, it does nothing on the search head layer and can be safety disabled</p></li>
+<li><p>HF: This report runs on the HF</p></li>
+</ul>
+</section>
+<section id="dhl-mq-ha-group-get-ha-groups-from-remote-storage">
+<h4>DHL MQ HA group - get ha groups from remote storage<a class="headerlink" href="#dhl-mq-ha-group-get-ha-groups-from-remote-storage" title="Permalink to this heading">¶</a></h4>
+<p><strong>This scheduled report retrieves the node manager information from the SHC and puts them in cache in a local KVstore on the consumers, it is used for High availability purposes.</strong></p>
+<p><strong>SHC versus HF:</strong></p>
+<ul class="simple">
+<li><p>SHC: This report is designed for Heavy Forwarders, it does nothing on the search head layer and can be safety disabled</p></li>
+<li><p>HF: This report runs on the HF</p></li>
+</ul>
+</section>
+<section id="dhl-mq-ha-group-manager-group-election">
+<h4>DHL MQ HA group - manager group election<a class="headerlink" href="#dhl-mq-ha-group-manager-group-election" title="Permalink to this heading">¶</a></h4>
+<p><strong>This scheduled reports performs the node manager election per high availability group, and stores the information in a local KVstore of the SHC.</strong></p>
+<p><strong>SHC versus HF:</strong></p>
+<ul class="simple">
+<li><p>SHC: This report is designed for to run on the SHC</p></li>
+<li><p>HF: On the HF, this report does nothing and can be safety disabled if necessary</p></li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rbac.html" class="btn btn-neutral float-left" title="Role Based Access Control (RBAC)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="userguide.html" class="btn btn-neutral float-right" title="User guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, DHL.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

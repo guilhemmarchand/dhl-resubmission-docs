@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>High Scale Volume &mdash; dhl-resubmission 1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="User guide" href="userguide.html" />
+    <link rel="prev" title="Role Based Access Control (RBAC)" href="rbac.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            dhl-resubmission
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="compatibility.html">Compatibility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="deployment.html">Deployment and base configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration_http.html">HTTP SOAP configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration_mq.html">MQ configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="high_availability.html">High Availability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rbac.html">Role Based Access Control (RBAC)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">High Scale Volume</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#multiple-worker-processes">Multiple worker processes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-of-the-number-of-workers-on-the-frontend-application">Configuration of the number of workers on the frontend application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#worker-processes-in-the-logs">Worker processes in the logs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#multi-threading">Multi-threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mq-batch-processing-for-single-line-messages">MQ Batch processing for single line messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#metadata-kvstore-collections-for-a-fast-user-experience">Metadata KVstore collections for a fast user experience</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#performance-and-duration-counters">Performance and duration counters</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="userguide.html">User guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development and build process</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dhl-resubmission</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">High Scale Volume</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/scaling.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="high-scale-volume">
+<h1>High Scale Volume<a class="headerlink" href="#high-scale-volume" title="Permalink to this heading">¶</a></h1>
+<p><strong>The DHL resubmission solution provides scaling at large volume of messages using different techniques:</strong></p>
+<ul class="simple">
+<li><p>Multiple worker processes on the Heavy Forwarders</p></li>
+<li><p>Multithreading at the Python level when processing messages to their destination</p></li>
+<li><p>Batch processing for MQ single line messages</p></li>
+</ul>
+<p><strong>Also, the user interfaces realy on a metadata view of the backlog KVstore collections for a very fast user experience:</strong></p>
+<ul class="simple">
+<li><p>When submitting messages for reprocessing, the messages are stored in a KVstore collection on the Search Head Tier (one collection for HTTP, one for MQ)</p></li>
+<li><p>When dealing with large number of messages, the time needed to operate on the status of the batches would become extremely high and would slightly impact the user experience</p></li>
+<li><p>Therefore, the backend automatically reflect the batches definition into a Metadata KVstore collection, which is what user deal with instead of the whole backlog collections</p></li>
+</ul>
+<p><strong>Finally, the manage batch UI provide quick access to the performance counters, allowing users to easily review the amount of time required to process a batch effectively.</strong></p>
+<section id="multiple-worker-processes">
+<h2>Multiple worker processes<a class="headerlink" href="#multiple-worker-processes" title="Permalink to this heading">¶</a></h2>
+<p>For each processing Add-on <code class="docutils literal notranslate"><span class="pre">TA-dhl-http-resubmission</span></code> and <code class="docutils literal notranslate"><span class="pre">TA-dhl-mq-resubmission</span></code>, 5 workers processes are configured by default.</p>
+<p><strong>These are translated into a scheduled report per application and worker:</strong></p>
+<p><em>For SOAP:</em></p>
+<a class="with-border reference internal image-reference" href="_images/scaling1.png"><img alt="scaling1.png" class="with-border align-center" src="_images/scaling1.png" style="width: 1200px;" /></a>
+<p><em>For MQ:</em></p>
+<a class="with-border reference internal image-reference" href="_images/scaling2.png"><img alt="scaling2.png" class="with-border align-center" src="_images/scaling2.png" style="width: 1200px;" /></a>
+<p>Each worker is in fact an instance of the backend with its schedule and specifying a worker identifier, example:</p>
+<a class="with-border reference internal image-reference" href="_images/scaling3.png"><img alt="scaling3.png" class="with-border align-center" src="_images/scaling3.png" style="width: 1200px;" /></a>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<ul class="simple">
+<li><p>Worker instances are scheduled to run every minute such that any pending processes start as soon as possible and in parrallel.</p></li>
+<li><p>When the worker process starts, it will verify and load any messages associated with its own worker identifier.</p></li>
+<li><p>When batch of messages are submitted by users, the solution automatically split the messages</p></li>
+</ul>
+</div>
+<p><em>For instance, in the following example a batch of approximately 10k messages has been submitted to SOAP, looking at the worker_id KVstore field, we can observe the split between the different workers:</em></p>
+<p><em>Search example for SOAP:</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="n">inputlookup</span> <span class="n">append</span><span class="o">=</span><span class="n">t</span> <span class="n">http_publish_backlog</span> <span class="n">where</span> <span class="n">batch_uuid</span><span class="o">=</span><span class="s2">&quot;*&quot;</span>
+<span class="o">|</span> <span class="n">stats</span> <span class="n">count</span> <span class="n">by</span> <span class="n">batch_uuid</span><span class="p">,</span> <span class="n">worker</span> <span class="o">|</span> <span class="n">sort</span> <span class="n">worker_id</span>
+</pre></div>
+</div>
+<a class="with-border reference internal image-reference" href="_images/scaling4.png"><img alt="scaling4.png" class="with-border align-center" src="_images/scaling4.png" style="width: 1200px;" /></a>
+<p>Using this technique, each worker processes its messages independently which slightly optimize the capabilities of fast consuming messages.</p>
+<section id="configuration-of-the-number-of-workers-on-the-frontend-application">
+<h3>Configuration of the number of workers on the frontend application<a class="headerlink" href="#configuration-of-the-number-of-workers-on-the-frontend-application" title="Permalink to this heading">¶</a></h3>
+<p>The number of workers to be used when splitting the messages at the submission phase is configured at the level of the Search Head tier, in the <code class="docutils literal notranslate"><span class="pre">dhl_http_resubmission</span></code> and <code class="docutils literal notranslate"><span class="pre">dhl_mq_resubmission</span></code> applications:</p>
+<a class="with-border reference internal image-reference" href="_images/scaling5.png"><img alt="scaling5.png" class="with-border align-center" src="_images/scaling5.png" style="width: 1200px;" /></a>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<ul class="simple">
+<li><p>This number needs to match the number of worker processes configured and enaled on the consumer side in the associated <code class="docutils literal notranslate"><span class="pre">TA_dhl_http_resubmission</span></code> and <code class="docutils literal notranslate"><span class="pre">TA_dhl_mq_resubmission</span></code> Addons</p></li>
+<li><p>Shall we want to decrease the number of workers, update this value and disable the associate workers on the consummers</p></li>
+<li><p>On the opposite, shall we want to increase the number of workers, new workers can be created by cloning the report from an existing worker, updating the search and finally updating the number of workers configured</p></li>
+<li><p>If for any reasons, the number of workers configured in this screen does not match the number of enabled workers, messages associated with non existing or enabled workers will not be consummed</p></li>
+</ul>
+</div>
+</section>
+<section id="worker-processes-in-the-logs">
+<h3>Worker processes in the logs<a class="headerlink" href="#worker-processes-in-the-logs" title="Permalink to this heading">¶</a></h3>
+<p>When a consumer worker process messages, logs will automatically associate the operation with the worker identifier processing the messages, example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2023</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">04</span> <span class="mi">15</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">06</span><span class="p">,</span><span class="mi">907</span> <span class="n">INFO</span> <span class="n">submithttp</span><span class="o">.</span><span class="n">py</span> <span class="n">generate</span> <span class="mi">493</span> <span class="n">submithttp</span> <span class="ow">is</span> <span class="n">starting</span><span class="p">,</span> <span class="n">worker_id</span><span class="o">=</span><span class="mi">5</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="multi-threading">
+<h2>Multi-threading<a class="headerlink" href="#multi-threading" title="Permalink to this heading">¶</a></h2>
+<p>Python backend processing messages are designed to perform these tasks in parrallel using multi-threading, the level of multi-threading is controllable by two options worker together:</p>
+<ul class="simple">
+<li><p>Max TPS</p></li>
+<li><p>Max Multi-Threads</p></li>
+</ul>
+<a class="with-border reference internal image-reference" href="_images/scaling6.png"><img alt="scaling6.png" class="with-border align-center" src="_images/scaling6.png" style="width: 1200px;" /></a>
+<p>You can fine tune these settings to increase or lower the volume of messages which are being sent in parrallel, increasing these values will eventually increase the back pressure we may impose to the SOAP or MQ backends.</p>
+</section>
+<section id="mq-batch-processing-for-single-line-messages">
+<h2>MQ Batch processing for single line messages<a class="headerlink" href="#mq-batch-processing-for-single-line-messages" title="Permalink to this heading">¶</a></h2>
+<p>For MQ particularly, and if all messages from a batch are single line messages, the default approach is to leverage the <code class="docutils literal notranslate"><span class="pre">q</span></code> command capabilities to process messages in batch.</p>
+<p>In this case, and this is the default behaviour, messages are stored in a single file and sent as part of a batch send request using the q command argument <code class="docutils literal notranslate"><span class="pre">-F</span></code>.</p>
+<p>This behaviour can be enabled or disabled on the consumer sides in the <code class="docutils literal notranslate"><span class="pre">TA_dhl_mq_resubmission</span></code> Add-on:</p>
+<a class="with-border reference internal image-reference" href="_images/scaling7.png"><img alt="scaling7.png" class="with-border align-center" src="_images/scaling7.png" style="width: 1200px;" /></a>
+</section>
+<section id="metadata-kvstore-collections-for-a-fast-user-experience">
+<h2>Metadata KVstore collections for a fast user experience<a class="headerlink" href="#metadata-kvstore-collections-for-a-fast-user-experience" title="Permalink to this heading">¶</a></h2>
+<p><strong>To optimize the user experience and avoid hitting issues with large volume of messages, the resubmission solution implements a logic of Metadata KVstore, therefore for each application we have in fact two types of KVstore collections:</strong></p>
+<p><em>For SOAP:</em></p>
+<ul class="simple">
+<li><p>http_publish_backlog</p></li>
+<li><p>http_publish_metadata</p></li>
+</ul>
+<p><em>For MQ:</em></p>
+<ul class="simple">
+<li><p>mq_publish_backlog</p></li>
+<li><p>mq_publish_metadata</p></li>
+</ul>
+<p>When messages are submitted for reprocessing, the message including its payload are stored in the KVstore, at large scale this can lead to multi-millions of records temporarily stored in the KVstore collections.</p>
+<p>To avoid dealing directly with the large backlog collection from the user perspective, the solution instead relies on a Metadata view of the batches stored in very tiny KVstore collections, while it could take a while to update large volume of messages, it will take a millisecond to update a single Metadata record.</p>
+<p><strong>The loading logic of the Manage batch UI for instance calls the following macro:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>| `get_table_batches`
+</pre></div>
+</div>
+<p><strong>Which is defined as:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[get_table_batches]
+definition = inputlookup append=t mq_publish_metadata | inputlookup append=t http_publish_metadata | eval key=_key\
+| foreach account queue region [ eval &lt;&lt;FIELD&gt;&gt;=if(isnull(&#39;&lt;&lt;FIELD&gt;&gt;&#39;), &quot;global&quot;, &#39;&lt;&lt;FIELD&gt;&gt;&#39;) ]\
+| `eval_status_batch`\
+| sort - limit=0 submit_time\
+| eval duration=if(isnotnull(last_update_time), round(last_update_time-validation_time, 2), &quot;N/A&quot;)\
+| eval global_tps=if(isnotnull(duration), round(batch_submitted_count/duration, 2), &quot;N/A&quot;)\
+| eval duration=if(isnum(duration), tostring(duration, &quot;duration&quot;), duration)\
+| foreach submit_time, validation_time, last_update_time [ eval &lt;&lt;FIELD&gt;&gt; = strftime(&#39;&lt;&lt;FIELD&gt;&gt;&#39;, &quot;%c&quot;) ]\
+| join type=outer batch_uuid [ search `idx_resubmission` (sourcetype=&quot;dhl_mq_resubmission:commands:submitmq&quot; OR sourcetype=dhl_http_resubmission:commands:submithttp) CASE(ERROR) earliest=-7d latest=now | rex &quot;batch_uuid=(?&lt;batch_uuid&gt;\w+)&quot; | stats latest(_raw) as last_error by batch_uuid ]
+iseval = 0
+</pre></div>
+</div>
+</section>
+<section id="performance-and-duration-counters">
+<h2>Performance and duration counters<a class="headerlink" href="#performance-and-duration-counters" title="Permalink to this heading">¶</a></h2>
+<p>The solution handles different time related Metadata information, which are provided as part of the Manage Batch user interface and allows to easily review the time required for the processing of the batches:</p>
+<a class="with-border reference internal image-reference" href="_images/scaling8.png"><img alt="scaling8.png" class="with-border align-center" src="_images/scaling8.png" style="width: 1200px;" /></a>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rbac.html" class="btn btn-neutral float-left" title="Role Based Access Control (RBAC)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="userguide.html" class="btn btn-neutral float-right" title="User guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, DHL.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

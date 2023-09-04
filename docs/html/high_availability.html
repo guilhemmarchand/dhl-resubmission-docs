@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>High Availability &mdash; dhl-resubmission 1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Role Based Access Control (RBAC)" href="rbac.html" />
+    <link rel="prev" title="MQ configuration" href="configuration_mq.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            dhl-resubmission
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="compatibility.html">Compatibility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="deployment.html">Deployment and base configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration_http.html">HTTP SOAP configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration_mq.html">MQ configuration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">High Availability</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keep-alive-from-consumers">Keep alive from consumers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#on-the-receiver-side-search-head-tier">On the receiver side (Search Head tier)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#manager-per-ha-group-election-on-the-shc">Manager per HA group election on the SHC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#heavy-forwarders-consumers-manager-ha-group-verification">Heavy Forwarders consumers manager HA group verification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#single-node-run">Single node run</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#elected-manager">Elected manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#passive-node">Passive node</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#when-the-active-manager-goes-offline">When the active manager goes offline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rest-api-endpoints-logs-on-the-search-head-tier">REST API endpoints logs on the Search Head tier</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#consumers-related-logs">Consumers related logs</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#send-keep-alive-traces">send keep alive traces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#consumers-node-verification-traces">consumers node verification traces</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rbac.html">Role Based Access Control (RBAC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Administrative Reference matrix</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="userguide.html">User guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development and build process</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dhl-resubmission</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">High Availability</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/high_availability.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="high-availability">
+<h1>High Availability<a class="headerlink" href="#high-availability" title="Permalink to this heading">¶</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
+<p><strong>The DHL resubmission solutions supports High Availability as follows:</strong></p>
+<ul class="simple">
+<li><p>Multiple Heavy Forwarders can be members of a same <strong>HA group</strong></p></li>
+<li><p>The <strong>HA group</strong> is a an identifier configurable in the <code class="docutils literal notranslate"><span class="pre">TA-dhl-resubmission-ha-client</span></code> configuration UI</p></li>
+<li><p>Every consumer sends <strong>keep alive Metadata</strong> to the SHC layer on a regular basis hitting a REST API endpoint hosted by the application <code class="docutils literal notranslate"><span class="pre">dhl-resubmission</span></code>, keep alive Metadata are stored in a KVstore</p></li>
+<li><p>The SHC performs a <strong>manager election per HA group</strong> on a regular basis recycling these keep alive Metadata, by HA group a manager gets elected depending on the conditions</p></li>
+<li><p>Evevy consumer retrieves and <strong>caches the HA groups election Metadata</strong>, and stores in a local KVstore collection</p></li>
+<li><p>When the consumer sees messages pending from being processed, it verifies which member is the <strong>manager for its HA group</strong> using the local manager cache information</p></li>
+<li><p>If it is the manager for its group, messages are processed, otherwise the consumer remains inactive and does not process the messages</p></li>
+<li><p>When a manager is detected as <strong>offline</strong> based on how long we didn’t get a keep alive, any other online member from the group gets elected</p></li>
+<li><p>If there no <strong>online member</strong> active in the HA group, there is no manager elected and we cannot consume messages any longer until at least one member is online again</p></li>
+<li><p>The whole process can take up to <strong>5/10 minutes in case of an outage</strong> on the manager consumer during which we are not going to consume messages</p></li>
+<li><p>However, the process is <strong>fully automated and transparent</strong>, maximum 10 minutes after the outage happens on the manager, we start consuming using any of the online members</p></li>
+</ul>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading">¶</a></h2>
+<p><strong>The configuration stands on the consumer (Heavy Forwarder), define an HA group for the consuming pool:</strong></p>
+<a class="with-border reference internal image-reference" href="_images/ha_group1.png"><img alt="ha_group1.png" class="with-border align-center" src="_images/ha_group1.png" style="width: 1200px;" /></a>
+<p><strong>The HA group can be:</strong></p>
+<ul class="simple">
+<li><p>A string identifier of your choice, but using a meanfull naming convention is recommended</p></li>
+<li><p>The HA group should ideally describe the scope and purpose of the consumer, such as the application scopes and regions</p></li>
+<li><p>This is especially true as the Add-on provides analytic and alerting on High Availability, so the HA group is a metadata information allowing you to understand the context</p></li>
+</ul>
+<p>The HA group is the only configuration required, the whole process is fully automated and there are no interactions required either.</p>
+<p><strong>A few minutes after the HA group was configured, the High Availability overview dashboards shows the HA group and members statuses:</strong></p>
+<a class="with-border reference internal image-reference" href="_images/ha_group2.png"><img alt="ha_group2.png" class="with-border align-center" src="_images/ha_group2.png" style="width: 1000px;" /></a>
+</section>
+<section id="keep-alive-from-consumers">
+<h2>Keep alive from consumers<a class="headerlink" href="#keep-alive-from-consumers" title="Permalink to this heading">¶</a></h2>
+<p><strong>Every 5 minutes, consumers send Keep Alive Metadata to the SHC using a bearer token based authentification and target defined in the configuration UI of the consumers:</strong></p>
+<a class="with-border reference internal image-reference" href="_images/ha_group3.png"><img alt="ha_group3.png" class="with-border align-center" src="_images/ha_group3.png" style="width: 1000px;" /></a>
+<p>The scheduled report <code class="docutils literal notranslate"><span class="pre">DHL</span> <span class="pre">resubmission</span> <span class="pre">HA</span> <span class="pre">group</span> <span class="pre">-</span> <span class="pre">send</span> <span class="pre">keepalive</span> <span class="pre">consumer</span></code> calls the following command on the Heavy Forwarders:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="n">sendkeepalive</span>
+</pre></div>
+</div>
+<p>This custom commands hits a REST API endpoint on the Search Head tier, similar to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;https://</span><span class="si">{</span><span class="n">remote_host</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">remote_port</span><span class="si">}</span><span class="s1">/services/resubmission/send_keepalive&#39;</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="s1">&#39;ha_group_name&#39;</span><span class="p">:</span> <span class="n">ha_group</span><span class="p">,</span>
+      <span class="s1">&#39;consumer_name&#39;</span><span class="p">:</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">(),</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The activity from the Heavy Forwarder perspective is logged in:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">splunk</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">splunk</span><span class="o">/</span><span class="n">dhl_resubmision_sendkeepalive</span><span class="o">.</span><span class="n">log</span>
+</pre></div>
+</div>
+<p>Heavy Forwarders will index these logs into the _internal index automatically:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">index</span><span class="o">=</span><span class="n">_internal</span> <span class="n">sourcetype</span><span class="o">=</span><span class="n">dhl_resubmission</span><span class="p">:</span><span class="n">commands</span><span class="p">:</span><span class="n">dhl_resubmision_sendkeepalive</span>
+</pre></div>
+</div>
+</section>
+<section id="on-the-receiver-side-search-head-tier">
+<h2>On the receiver side (Search Head tier)<a class="headerlink" href="#on-the-receiver-side-search-head-tier" title="Permalink to this heading">¶</a></h2>
+<p>The receiver side of the keep alive sent by Heavy Forwarders is the Search Head tier hosting the <code class="docutils literal notranslate"><span class="pre">dhl_resubmission</span></code> application.</p>
+<p>The keep alive activity is logged to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">splunk</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">splunk</span><span class="o">/</span><span class="n">resubmission_ha_rest_api</span><span class="o">.</span><span class="n">log</span>
+</pre></div>
+</div>
+<p>And indexed automatically into the Splunk _internal index, the following search will show activity related to the keep alive calls performed by the clients:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">index</span><span class="o">=</span><span class="n">_internal</span> <span class="n">sourcetype</span><span class="o">=</span><span class="n">dhl</span><span class="p">:</span><span class="n">resubmission_ha</span><span class="p">:</span><span class="n">rest</span> <span class="n">post_send_keepalive</span>
+</pre></div>
+</div>
+<p><em>Example of activity traces:</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2023</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">04</span> <span class="mi">08</span><span class="p">:</span><span class="mi">28</span><span class="p">:</span><span class="mi">01</span><span class="p">,</span><span class="mi">703</span> <span class="n">INFO</span> <span class="n">resubmission_ha_rest_handler</span><span class="o">.</span><span class="n">py</span> <span class="n">post_send_keepalive</span> <span class="mi">203</span> <span class="n">keepalive</span><span class="p">,</span> <span class="n">updating</span> <span class="n">record</span> <span class="n">key</span><span class="o">=</span><span class="mi">95</span><span class="n">b317f7ce7d377bda777f4b76d132a5</span><span class="p">,</span> <span class="n">ha_group_name</span><span class="o">=</span><span class="n">hagrp001</span><span class="p">,</span> <span class="n">consumer_name</span><span class="o">=</span><span class="n">hf1</span><span class="p">,</span> <span class="n">collection</span><span class="o">=</span><span class="n">kv_resubmission_ha_consumers_keepalive</span>
+</pre></div>
+</div>
+<p>Keep alive statuses are stored in a KVstore on the Search Head tier:</p>
+<a class="with-border reference internal image-reference" href="_images/ha_group4.png"><img alt="ha_group4.png" class="with-border align-center" src="_images/ha_group4.png" style="width: 1000px;" /></a>
+</section>
+<section id="manager-per-ha-group-election-on-the-shc">
+<h2>Manager per HA group election on the SHC<a class="headerlink" href="#manager-per-ha-group-election-on-the-shc" title="Permalink to this heading">¶</a></h2>
+<p><strong>Every 5 minutes, the Search Head tier verifies the statuses of keep alive records and performs the election of a manager in each group, this is handled by the following scheduled report:</strong></p>
+<ul class="simple">
+<li><p>DHL resubmission HA group - manager group election</p></li>
+</ul>
+<a class="with-border reference internal image-reference" href="_images/ha_group5.png"><img alt="ha_group5.png" class="with-border align-center" src="_images/ha_group5.png" style="width: 1000px;" /></a>
+</section>
+<section id="heavy-forwarders-consumers-manager-ha-group-verification">
+<h2>Heavy Forwarders consumers manager HA group verification<a class="headerlink" href="#heavy-forwarders-consumers-manager-ha-group-verification" title="Permalink to this heading">¶</a></h2>
+<p>When a consumer starts a task on the Heavy Forwarders, it first verifies the status of the HA group it is a member of.</p>
+<p>It performs this task by hitting a REST API endpoint hosted in the <code class="docutils literal notranslate"><span class="pre">dhl_resubmission</span></code> application:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">services</span><span class="o">/</span><span class="n">resubmission_client</span><span class="o">/</span><span class="n">get_manager</span>
+</pre></div>
+</div>
+<p>The Search Head tier response provides the name of the manager for the group, the consumers then verifies its own identity and takes a decision based on this statement:</p>
+<section id="single-node-run">
+<h3>Single node run<a class="headerlink" href="#single-node-run" title="Permalink to this heading">¶</a></h3>
+<p>If the application <code class="docutils literal notranslate"><span class="pre">TA-dhl-resubmission-ha-client</span></code> was installed but not configured (the HA group was left at its default), then the Heavy Forwarder is running in single node mode, and consuming messages will always be granted.</p>
+<p><strong>Consumers will log a message similar to:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">context</span><span class="o">=</span><span class="s2">&quot;high-availibity&quot;</span><span class="p">,</span> <span class="n">this</span> <span class="n">consumer</span> <span class="ow">is</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">singlenode</span> <span class="n">mode</span><span class="p">,</span> <span class="n">messages</span> <span class="n">consumption</span> <span class="n">will</span> <span class="n">be</span> <span class="n">granted</span>
+</pre></div>
+</div>
+</section>
+<section id="elected-manager">
+<h3>Elected manager<a class="headerlink" href="#elected-manager" title="Permalink to this heading">¶</a></h3>
+<p><strong>If the Heavy Forwarder node is currently the elected manager, the consumer will log:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2023</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">04</span> <span class="mi">08</span><span class="p">:</span><span class="mi">44</span><span class="p">:</span><span class="mi">08</span><span class="p">,</span><span class="mi">247</span> <span class="n">INFO</span> <span class="n">submithttp</span><span class="o">.</span><span class="n">py</span> <span class="n">generate</span> <span class="mi">522</span> <span class="n">worker_id</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="s2">&quot;high-availibity&quot;</span><span class="p">,</span> <span class="n">this</span> <span class="n">consumer</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">elected</span> <span class="n">manager</span> <span class="k">for</span> <span class="n">this</span> <span class="n">group</span><span class="p">,</span> <span class="n">messages</span> <span class="n">consumption</span> <span class="n">will</span> <span class="n">be</span> <span class="n">granted</span><span class="p">,</span> <span class="n">ha_group_name</span><span class="o">=</span><span class="s2">&quot;hagrp001&quot;</span><span class="p">,</span> <span class="n">myhostname</span><span class="o">=</span><span class="s2">&quot;hf1&quot;</span><span class="p">,</span> <span class="n">ha_group_elected_manager</span><span class="o">=</span><span class="s2">&quot;hf1&quot;</span><span class="p">,</span> <span class="n">ha_registered_consumers</span><span class="o">=</span><span class="s2">&quot;hf1,hf2&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="passive-node">
+<h3>Passive node<a class="headerlink" href="#passive-node" title="Permalink to this heading">¶</a></h3>
+<p><strong>If the Heavy Forwarder node is not currently the elected manager, the consumer will log:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2023</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">04</span> <span class="mi">09</span><span class="p">:</span><span class="mi">03</span><span class="p">:</span><span class="mi">06</span><span class="p">,</span><span class="mi">676</span> <span class="n">INFO</span> <span class="n">submithttp</span><span class="o">.</span><span class="n">py</span> <span class="n">generate</span> <span class="mi">525</span> <span class="n">worker_id</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="s2">&quot;high-availibity&quot;</span><span class="p">,</span> <span class="n">this</span> <span class="n">consumer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">currently</span> <span class="n">the</span> <span class="n">elected</span> <span class="n">manager</span> <span class="k">for</span> <span class="n">this</span> <span class="n">group</span><span class="p">,</span> <span class="n">messages</span> <span class="n">consumption</span> <span class="n">will</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">granted</span><span class="p">,</span> <span class="n">ha_group_name</span><span class="o">=</span><span class="s2">&quot;hagrp001&quot;</span><span class="p">,</span> <span class="n">myhostname</span><span class="o">=</span><span class="s2">&quot;hf2&quot;</span><span class="p">,</span> <span class="n">ha_group_elected_manager</span><span class="o">=</span><span class="s2">&quot;hf1&quot;</span><span class="p">,</span> <span class="n">ha_registered_consumers</span><span class="o">=</span><span class="s2">&quot;hf1,hf2&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="when-the-active-manager-goes-offline">
+<h2>When the active manager goes offline<a class="headerlink" href="#when-the-active-manager-goes-offline" title="Permalink to this heading">¶</a></h2>
+<p><strong>When the current manager goes offline for any reason, for instance:</strong></p>
+<ul class="simple">
+<li><p>Splunk service is stopped or not operating properly on the consumer for more than 5 minutes</p></li>
+<li><p>It cannot send Keep alive Metadata any longer to the SHC (network issues, authentication issues, etc)</p></li>
+<li><p>A configuration issues on the consumer prevents the normal Keep alive execution (application was uninstalled, reports disaabled etc)</p></li>
+</ul>
+<p><strong>The issue is detected within the next 5/10 minutes maximum and another member from the HA group gets elected:</strong></p>
+<a class="with-border reference internal image-reference" href="_images/ha_group8.png"><img alt="ha_group8.png" class="with-border align-center" src="_images/ha_group8.png" style="width: 1000px;" /></a>
+<ul class="simple">
+<li><p>During the time of the manager outage detection which can take up to 10 minutes, we are not consuming messages for the HA group any longer</p></li>
+<li><p>Any pending batch which was approved remains pending until we have at least one online consumer in the HA group</p></li>
+<li><p>When a new manager gets elected, messages start to be processed transparently using the new manager for the group</p></li>
+<li><p>When the issue is fixed on the previsouly elected manager, and it is detected again, the member remains a passive member as long as the current manager remains online</p></li>
+</ul>
+<p><strong>When the member that suffered from an outage is back online, the High Availability dashboard shows its status is back in the pool, the member becomes a valid election candidate again:</strong></p>
+<a class="with-border reference internal image-reference" href="_images/ha_group9.png"><img alt="ha_group9.png" class="with-border align-center" src="_images/ha_group9.png" style="width: 1000px;" /></a>
+<ul class="simple">
+<li><p>If for some reason, a given consumer cannot access to the SHC any longer, its own status is unknown and it will no longer process messages until the service is back again</p></li>
+</ul>
+<p>The whole process is entirely automated, from the discovery of the HA groups to the management of the HA group managers, no intervention is required at any point in time for the consuming process to be highly available on multiple Splunk Heavy Forwarders.</p>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading">¶</a></h2>
+<section id="rest-api-endpoints-logs-on-the-search-head-tier">
+<h3>REST API endpoints logs on the Search Head tier<a class="headerlink" href="#rest-api-endpoints-logs-on-the-search-head-tier" title="Permalink to this heading">¶</a></h3>
+<p><strong>Logs are indexed in the _internal index, and can be accessed through the following search:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">index</span><span class="o">=</span><span class="n">_internal</span> <span class="n">sourcetype</span><span class="o">=</span><span class="n">dhl</span><span class="p">:</span><span class="n">resubmission_ha</span><span class="p">:</span><span class="n">rest</span>
+</pre></div>
+</div>
+<p><strong>On the file-system, logs are written to:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">splunk</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">splunk</span><span class="o">/</span><span class="n">resubmission_ha_rest_api</span><span class="o">.</span><span class="n">log</span>
+</pre></div>
+</div>
+<section id="consumers-related-logs">
+<h4>Consumers related logs<a class="headerlink" href="#consumers-related-logs" title="Permalink to this heading">¶</a></h4>
+</section>
+</section>
+<section id="send-keep-alive-traces">
+<h3>send keep alive traces<a class="headerlink" href="#send-keep-alive-traces" title="Permalink to this heading">¶</a></h3>
+<p><strong>Consumers log keep alive traces can be searched by:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">index</span><span class="o">=</span><span class="n">_internal</span> <span class="n">sourcetype</span><span class="o">=</span><span class="n">dhl_resubmission</span><span class="p">:</span><span class="n">commands</span><span class="p">:</span><span class="n">dhl_resubmision_sendkeepalive</span>
+</pre></div>
+</div>
+<p><strong>On the file-system, logs are written to:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">splunk</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">splunk</span><span class="o">/</span><span class="n">dhl_resubmision_sendkeepalive</span><span class="o">.</span><span class="n">log</span>
+</pre></div>
+</div>
+</section>
+<section id="consumers-node-verification-traces">
+<h3>consumers node verification traces<a class="headerlink" href="#consumers-node-verification-traces" title="Permalink to this heading">¶</a></h3>
+<p>The manager node verification traces will be logged in the consumer main logs of the workers:</p>
+<p><em>MQ:</em></p>
+<p><strong>In Splunk:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">index</span><span class="o">=</span><span class="n">gbs_its_pds_infra_mqsubmission</span> <span class="n">sourcetype</span><span class="o">=</span><span class="s2">&quot;dhl_mq_resubmission:commands:submitmq&quot;</span>
+</pre></div>
+</div>
+<p><strong>On the file-system:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">splunk</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">splunk</span><span class="o">/</span><span class="n">dhl_mq_resubmision_submitmq</span><span class="o">.</span><span class="n">log</span>
+</pre></div>
+</div>
+<p><em>SOAP:</em></p>
+<p><strong>In Splunk:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">index</span><span class="o">=</span><span class="n">gbs_its_pds_infra_httpsubmission</span> <span class="n">sourcetype</span><span class="o">=</span><span class="s2">&quot;dhl_http_resubmission:commands:submithttp&quot;</span>
+</pre></div>
+</div>
+<p><strong>On the file-system:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">splunk</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">splunk</span><span class="o">/</span><span class="n">dhl_http_resubmision_submithttp</span><span class="o">.</span><span class="n">log</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="configuration_mq.html" class="btn btn-neutral float-left" title="MQ configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rbac.html" class="btn btn-neutral float-right" title="Role Based Access Control (RBAC)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, DHL.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

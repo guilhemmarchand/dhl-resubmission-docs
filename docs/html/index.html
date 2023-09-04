@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to the DHL resubmission documentation &mdash; dhl-resubmission 1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Compatibility" href="compatibility.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            dhl-resubmission
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="compatibility.html">Compatibility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="deployment.html">Deployment and base configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration_http.html">HTTP SOAP configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration_mq.html">MQ configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="high_availability.html">High Availability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rbac.html">Role Based Access Control (RBAC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scaling.html">High Scale Volume</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="userguide.html">User guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development and build process</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">dhl-resubmission</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Welcome to the DHL resubmission documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="welcome-to-the-dhl-resubmission-documentation">
+<h1>Welcome to the DHL resubmission documentation<a class="headerlink" href="#welcome-to-the-dhl-resubmission-documentation" title="Permalink to this heading">¶</a></h1>
+<p><strong>The DHL resubmission solution provides services for:</strong></p>
+<ul class="simple">
+<li><p>Publishing on demand any volume of messages to IBM MQ managers or SOAR APIs via HTTPS, in a scalabale, resilient and distributed manner using various Splunk components</p></li>
+<li><p>Handling the message life cycle at any point in time with RBAC features</p></li>
+<li><p>Hanlding temporary and permanent failures with automated retries based on a life cycle concept</p></li>
+<li><p>High availability with automated fail-over using multiple Splunk Heavy Fowarders working in a HA group concept</p></li>
+</ul>
+<p><em>In a nutshell:</em></p>
+<ul class="simple">
+<li><p>For each technlology (MQ and SOAP), there are frontend and backend Splunk applications which are deployed as needed</p></li>
+<li><p>Users interact with the solution with a pre-defined workflow involving different components to create and maintain records in a Splunk distributed KVstore.</p></li>
+<li><p>The KVstore records contain the message payloads in addition with various Metadata such as the application name, the region, MQ/SOAP related information (managers, queues. Etc), statuses, user requesting information.</p></li>
+<li><p>By nature, the KVstore is automatically replicated amongst the SHC members and is available on all DHL deployed sites.</p></li>
+<li><p>A number of Splunk Heavy Forwarders are deployed on a per site basis and leverage the Splunk API to retrieve and maintain the KVstore records with configurable filtering rules which allow dedicating a single Heavy Forwarder to consume the records it is responsible for.</p></li>
+<li><p>Accounts are created in the MQ and SOAP Addons, an account defines various technical information such as the target or the authentication</p></li>
+<li><p>A concept of automatic retries and eviction policy is part of the application to handle the life cycle of the records, from their initial submission requests (pending state), to their publication (success), or temporary or definitive failures. (temporary_failure, permanent_failure)</p></li>
+<li><p>Messages are submitted to the MQ third party using a low level high performance third party (q command) which allow batching single line messages for the better performances (which single line messages represent around 70% of the total volume of messages), while multiline messages are handled with the same q command but a different workflow handling the records individually at a lower rate.</p></li>
+</ul>
+</section>
+<section id="overview">
+<h1>Overview:<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="compatibility.html">Compatibility</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="compatibility.html#splunk-compatibility">Splunk compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compatibility.html#python-support">Python support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compatibility.html#ibm-mq-compatibility">IBM MQ compatibility</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="requirements.html#mq-client-librairies">MQ Client librairies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="requirements.html#q-command">q command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="requirements.html#splunk-api-communication-between-the-heavy-forwarders-and-the-shc-members">Splunk API communication between the Heavy Forwarders and the SHC members</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="deployment-and-configuration">
+<h1>Deployment and configuration:<a class="headerlink" href="#deployment-and-configuration" title="Permalink to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="deployment.html">Deployment and base configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html#deployment-matrix">Deployment Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html#dhl-resubmission">dhl-resubmission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html#dhl-mq-resubmission-dhl-http-resubmission">dhl-mq-resubmission/dhl-http-resubmission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html#ta-dhl-mq-resubmission-ta-dhl-http-resubmission">TA-dhl-mq-resubmission/TA-dhl-http-resubmission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html#ta-dhl-resubmission-ha-client">TA-dhl-resubmission-ha-client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html#bearer-token-requirements">Bearer Token requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html#configuring-the-connectivity-from-the-heavy-forwarders-to-the-search-head-tier">Configuring the connectivity from the Heavy Forwarders to the Search Head tier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html#configuring-the-mq-dependencies-on-the-heavy-forwarder-s">Configuring the MQ dependencies on the Heavy Forwarder(s)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="configuration_http.html">HTTP SOAP configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configuration_http.html#configuration-of-a-soap-api-account">Configuration of a SOAP API account</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_http.html#checking-the-connectivity">Checking the connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_http.html#advanced-configuration">Advanced configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="configuration_mq.html">MQ configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configuration_mq.html#configuration-of-an-mq-manager-account">Configuration of an MQ manager account</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration_mq.html#advanced-configuration">Advanced configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="high_availability.html">High Availability</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="high_availability.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="high_availability.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="high_availability.html#keep-alive-from-consumers">Keep alive from consumers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="high_availability.html#on-the-receiver-side-search-head-tier">On the receiver side (Search Head tier)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="high_availability.html#manager-per-ha-group-election-on-the-shc">Manager per HA group election on the SHC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="high_availability.html#heavy-forwarders-consumers-manager-ha-group-verification">Heavy Forwarders consumers manager HA group verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="high_availability.html#when-the-active-manager-goes-offline">When the active manager goes offline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="high_availability.html#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rbac.html">Role Based Access Control (RBAC)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rbac.html#builtin-roles">Builtin roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rbac.html#providing-rbac-access-for-submitters-approvers">Providing RBAC access for submitters &amp; approvers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rbac.html#providing-rbac-access-for-submitters">Providing RBAC access for submitters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rbac.html#providing-rbac-access-for-approvers">Providing RBAC access for approvers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rbac.html#superadmin-roles">Superadmin roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rbac.html#rbac-by-the-example">RBAC by the example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="scaling.html">High Scale Volume</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="scaling.html#multiple-worker-processes">Multiple worker processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scaling.html#multi-threading">Multi-threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scaling.html#mq-batch-processing-for-single-line-messages">MQ Batch processing for single line messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scaling.html#metadata-kvstore-collections-for-a-fast-user-experience">Metadata KVstore collections for a fast user experience</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scaling.html#performance-and-duration-counters">Performance and duration counters</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="user-guide">
+<h1>User guide:<a class="headerlink" href="#user-guide" title="Permalink to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="userguide.html">User guide</a></li>
+</ul>
+</div>
+</section>
+<section id="versions-build-history-and-development">
+<h1>Versions, build history and development:<a class="headerlink" href="#versions-build-history-and-development" title="Permalink to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development and build process</a></li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="compatibility.html" class="btn btn-neutral float-right" title="Compatibility" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, DHL.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTTP SOAP configuration &mdash; dhl-resubmission 1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MQ configuration" href="configuration_mq.html" />
+    <link rel="prev" title="Deployment and base configuration" href="deployment.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            dhl-resubmission
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="compatibility.html">Compatibility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="deployment.html">Deployment and base configuration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">HTTP SOAP configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-of-a-soap-api-account">Configuration of a SOAP API account</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#checking-the-connectivity">Checking the connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-configuration">Advanced configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="configuration_mq.html">MQ configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="high_availability.html">High Availability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="high_availability.html#send-keep-alive-traces">send keep alive traces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="high_availability.html#consumers-node-verification-traces">consumers node verification traces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rbac.html">Role Based Access Control (RBAC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Administrative Reference matrix</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="userguide.html">User guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development and build process</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dhl-resubmission</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">HTTP SOAP configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/configuration_http.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="http-soap-configuration">
+<h1>HTTP SOAP configuration<a class="headerlink" href="#http-soap-configuration" title="Permalink to this heading">¶</a></h1>
+<p><strong>The configuration of the SOAR HTTP(s) resubmission can be summarized as following:</strong></p>
+<ul class="simple">
+<li><p>The configuration stands on the Heavy Forwarder consumers via the creation of one or more SOAR API accounts in the <code class="docutils literal notranslate"><span class="pre">TA-dhl-http-resubmission</span></code> application</p></li>
+<li><p>A SOAR API account defines the SOAR API target, as well as the authentication information and additional technical information for this account</p></li>
+<li><p>Once the account has been defined, the consumer can start consuming pending messages and submit these to the SOAR API target</p></li>
+</ul>
+<section id="configuration-of-a-soap-api-account">
+<h2>Configuration of a SOAP API account<a class="headerlink" href="#configuration-of-a-soap-api-account" title="Permalink to this heading">¶</a></h2>
+<p><strong>On the Heavy Forwarder, access to the configuration UI:</strong></p>
+<a class="with-border reference internal image-reference" href="_images/configuration_soap1.png"><img alt="configuration_soap1.png" class="with-border align-center" src="_images/configuration_soap1.png" style="width: 1200px;" /></a>
+<p><em>Add a new account, the following information are required:*</em></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Item</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Name</strong></p></td>
+<td><p>This is the account identifier which will be used when submitting messages for resubmission purposes</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>SOAP API service url</strong></p></td>
+<td><p>The SOAP API service url, in the format <a class="reference external" href="https:/">https:/</a>/&lt;service&gt;:&lt;port&gt;/&lt;SOAP service&gt;</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Username</strong></p></td>
+<td><p>The username for the authentication purposes using basic authentication via SSL</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Password</strong></p></td>
+<td><p>The username for the authentication purposes using basic authentication via SSL</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Timeout</strong></p></td>
+<td><p>The max timeout value in seconds to be applied when performing calls to this SOAP API</p></td>
+</tr>
+</tbody>
+</table>
+<a class="with-border reference internal image-reference" href="_images/configuration_soap2.png"><img alt="configuration_soap2.png" class="with-border align-center" src="_images/configuration_soap2.png" style="width: 1200px;" /></a>
+</section>
+<section id="checking-the-connectivity">
+<h2>Checking the connectivity<a class="headerlink" href="#checking-the-connectivity" title="Permalink to this heading">¶</a></h2>
+<p><strong>You can perform a connectivity check from the Heavy Forwarder consumer to the SOAP API endpoint account using the following builtin SPL command:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="n">testconnecthttp</span> <span class="n">target</span><span class="o">=&lt;</span><span class="n">account_name</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p><strong>The command also allows to specify the type of HTTP call (defaults to get):</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="n">testconnecthttp</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;account_name&quot;</span> <span class="n">soap_test_request_type</span><span class="o">=&lt;</span><span class="n">The</span> <span class="n">soap_test_request_type</span><span class="p">,</span> <span class="n">valid</span> <span class="n">options</span><span class="p">:</span> <span class="n">get</span><span class="o">|</span><span class="n">head</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p><strong>Example of a failure, in this example the service cannot be reached from the network perspective:</strong></p>
+<a class="with-border reference internal image-reference" href="_images/configuration_soap3.png"><img alt="configuration_soap3.png" class="with-border align-center" src="_images/configuration_soap3.png" style="width: 1200px;" /></a>
+<p><strong>Example of a success, the response is the provide by the target:</strong></p>
+<a class="with-border reference internal image-reference" href="_images/configuration_soap3.png"><img alt="configuration_soap3.png" class="with-border align-center" src="_images/configuration_soap3.png" style="width: 1200px;" /></a>
+<p>If the connectivity is successful, the consumer is ready to start consuming and submitting to the SOAP API.</p>
+<p><strong>You can access the logs from the testconnecthttp command as follows:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">index</span><span class="o">=</span><span class="n">gbs_its_pds_infra_httpsubmission</span> <span class="n">sourcetype</span><span class="o">=</span><span class="s2">&quot;dhl_http_resubmission:commands:testconnecthttp&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="advanced-configuration">
+<h2>Advanced configuration<a class="headerlink" href="#advanced-configuration" title="Permalink to this heading">¶</a></h2>
+<p><strong>The advanced configuration provides additional options that can be defined on a per consumer basis:</strong></p>
+<a class="with-border reference internal image-reference" href="_images/configuration_soap_advanced.png"><img alt="configuration_soap_advanced.png" class="with-border align-center" src="_images/configuration_soap_advanced.png" style="width: 1200px;" /></a>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Item</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Region filter</strong></p></td>
+<td><p>Define the region value po restrict the activity of this consumer to a certain region, sets to global to consume any messages in the KVstore</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Max TPS</strong></p></td>
+<td><p>The maximum number of MQ transactions per seconds before we start throttling the requests</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Max multi-threads</strong></p></td>
+<td><p>The maximum number of concurrent threads, this defines the concurrent multi-threading when performing transactions</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="deployment.html" class="btn btn-neutral float-left" title="Deployment and base configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="configuration_mq.html" class="btn btn-neutral float-right" title="MQ configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, DHL.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

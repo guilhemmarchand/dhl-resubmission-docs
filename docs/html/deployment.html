@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deployment and base configuration &mdash; dhl-resubmission 1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MQ managers Configuration" href="configuration.html" />
+    <link rel="prev" title="Requirements" href="requirements.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            dhl-resubmission
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="compatibility.html">Compatibility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Deployment and base configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#deployment-matrix">Deployment Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dhl-resubmission">dhl-resubmission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dhl-mq-resubmission-dhl-http-resubmission">dhl-mq-resubmission/dhl-http-resubmission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ta-dhl-mq-resubmission-ta-dhl-http-resubmission">TA-dhl-mq-resubmission/TA-dhl-http-resubmission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ta-dhl-resubmission-ha-client">TA-dhl-resubmission-ha-client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bearer-token-requirements">Bearer Token requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuring-the-connectivity-from-the-heavy-forwarders-to-the-search-head-tier">Configuring the connectivity from the Heavy Forwarders to the Search Head tier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuring-the-mq-dependencies-on-the-heavy-forwarder-s">Configuring the MQ dependencies on the Heavy Forwarder(s)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mqclient-librairies-installation">MQClient librairies installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#q-command-installation">Q command installation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">MQ managers Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="high_availability.html">High Availability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rbac.html">Role Based Access Control (RBAC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Administrative Reference matrix</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="userguide.html">User guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development and build process</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dhl-resubmission</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Deployment and base configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/deployment.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="deployment-and-base-configuration">
+<h1>Deployment and base configuration<a class="headerlink" href="#deployment-and-base-configuration" title="Permalink to this heading">¶</a></h1>
+<section id="deployment-matrix">
+<h2>Deployment Matrix<a class="headerlink" href="#deployment-matrix" title="Permalink to this heading">¶</a></h2>
+<p>The solution is composed by 6 Splunk applications, 3 frontend applications and 2 backend applications.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Application</p></th>
+<th class="head"><p>Tier target</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dhl-resubmission</span></code></p></td>
+<td><p>Search Head(s)</p></td>
+<td><p>Management application for DHL resubmission</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dhl-mq-resubmission</span></code></p></td>
+<td><p>Search Head(s)</p></td>
+<td><p>MQ specific frontend application</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dhl-http-resubmission</span></code></p></td>
+<td><p>Search Head(s)</p></td>
+<td><p>SOAP HTTP specific frontend application</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TA-dhl-mq-resubmission</span></code></p></td>
+<td><p>Heavy Forwarder(s)</p></td>
+<td><p>MQ specific frontend application</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TA-dhl-http-resubmission</span></code></p></td>
+<td><p>Heavy Forwarder(s)</p></td>
+<td><p>SOAP HTTP specific frontend application</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TA-dhl-resubmission-ha-client</span></code></p></td>
+<td><p>Heavy Forwarder(s)</p></td>
+<td><p>This application provides failover capabilities for the solution between multiple Heavy Forwarders</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="dhl-resubmission">
+<h2>dhl-resubmission<a class="headerlink" href="#dhl-resubmission" title="Permalink to this heading">¶</a></h2>
+<p><strong>This application is the main frontend application, it provides:</strong></p>
+<ul class="simple">
+<li><p>The main dashboards and navigation for administrators and users to interact with the solution, monitor the processes, and perform troubleshooting actions</p></li>
+<li><p>Supports some frontend related components such as Javascripts files, HTML related objects</p></li>
+<li><p>Supports some generic REST API endpoints used by the <code class="docutils literal notranslate"><span class="pre">TA-dhl-resubmission-ha-client</span></code> to perform the send keepalive action</p></li>
+</ul>
+</section>
+<section id="dhl-mq-resubmission-dhl-http-resubmission">
+<h2>dhl-mq-resubmission/dhl-http-resubmission<a class="headerlink" href="#dhl-mq-resubmission-dhl-http-resubmission" title="Permalink to this heading">¶</a></h2>
+<p><strong>These two applications are the frontend applications for MQ and SOAP HTTP resubmission, these provides:</strong></p>
+<ul class="simple">
+<li><p>Roles definition for users and administrators</p></li>
+<li><p>KVstore definitions, as well as various other Splunk configuration to parse and index logs generated by the frontend tools</p></li>
+<li><p>Related Splunk custom commands used to interact with the resubmission workflow, such as submitting or validating batches of messages (putmqrelay/puthttprelay, managemqbatch/managehttpbatch, purgemqbacklog/purgehttpbacklog)</p></li>
+<li><p>KVstore purge scheduled reports</p></li>
+</ul>
+</section>
+<section id="ta-dhl-mq-resubmission-ta-dhl-http-resubmission">
+<h2>TA-dhl-mq-resubmission/TA-dhl-http-resubmission<a class="headerlink" href="#ta-dhl-mq-resubmission-ta-dhl-http-resubmission" title="Permalink to this heading">¶</a></h2>
+<p><strong>These two applications are the backend portions of the solutions:</strong></p>
+<ul class="simple">
+<li><p>Perform the actual resubmission of messages to the target system, using MQ or SOAR HTTP(s)</p></li>
+<li><p>Interact with the splunk API on the Search Head Tier to handle the life cycle of the messages</p></li>
+</ul>
+</section>
+<section id="ta-dhl-resubmission-ha-client">
+<h2>TA-dhl-resubmission-ha-client<a class="headerlink" href="#ta-dhl-resubmission-ha-client" title="Permalink to this heading">¶</a></h2>
+<p><strong>This application is designed to provide failover capabilities for the solution:</strong></p>
+<ul class="simple">
+<li><p>Allows defining a group membership for the Heavy Forwarder</p></li>
+<li><p>Interacts with the REST API endpoints hosted by the dhl-resubmission application on the Search Head tier to send keepalive information</p></li>
+</ul>
+</section>
+<section id="bearer-token-requirements">
+<h2>Bearer Token requirements<a class="headerlink" href="#bearer-token-requirements" title="Permalink to this heading">¶</a></h2>
+<p><strong>A bearer token must be created on the SHC which is going to be used by the Heavy Forwarders to perform their various operations on different KVstore collections part of the TA.</strong></p>
+<p>The bearer token must match a service account user that is a member of the builtin role:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mqsubmission_superadmin</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">httpsubmission_superadmin</span></code></p></li>
+</ul>
+</section>
+<section id="configuring-the-connectivity-from-the-heavy-forwarders-to-the-search-head-tier">
+<h2>Configuring the connectivity from the Heavy Forwarders to the Search Head tier<a class="headerlink" href="#configuring-the-connectivity-from-the-heavy-forwarders-to-the-search-head-tier" title="Permalink to this heading">¶</a></h2>
+<p><strong>The connectivity to the Search Head tier needs to be performed in each of the following applications, on the Heavy Forwarder(s):</strong></p>
+<ul class="simple">
+<li><p>TA-dhl-mq-resubmission</p></li>
+<li><p>TA-dhl-http-resubmission</p></li>
+</ul>
+<p><strong>This requires:</strong></p>
+<ul class="simple">
+<li><p>The splunk API endpoint, example: <a class="reference external" href="https://my_search_head.mydomain.com:8089">https://my_search_head.mydomain.com:8089</a></p></li>
+<li><p>The bearer token associated with the account</p></li>
+</ul>
+<p><em>TA-dhl-mq-resubmission:</em></p>
+<a class="reference internal image-reference" href="_images/TA-dhl-mq-resubmission_config01.png"><img alt="ha_group1.png" class="align-center" src="_images/TA-dhl-mq-resubmission_config01.png" style="width: 1200px;" /></a>
+<p><em>TA-dhl-http-resubmission:</em></p>
+<a class="reference internal image-reference" href="_images/TA-dhl-http-resubmission_config01.png"><img alt="ha_group1.png" class="align-center" src="_images/TA-dhl-http-resubmission_config01.png" style="width: 1200px;" /></a>
+<p><strong>Test the connectivity:</strong></p>
+<p>You can test the connectivity using the builtin custom command:</p>
+<p><em>TA-dhl-mq-resubmission:</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="n">testconnectmq</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/TA-dhl-mq-resubmission_config02.png"><img alt="ha_group1.png" class="align-center" src="_images/TA-dhl-mq-resubmission_config02.png" style="width: 1200px;" /></a>
+<p><em>TA-dhl-http-resubmission:</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="n">testconnecthttp</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/TA-dhl-http-resubmission_config02.png"><img alt="ha_group1.png" class="align-center" src="_images/TA-dhl-http-resubmission_config02.png" style="width: 1200px;" /></a>
+</section>
+<section id="configuring-the-mq-dependencies-on-the-heavy-forwarder-s">
+<h2>Configuring the MQ dependencies on the Heavy Forwarder(s)<a class="headerlink" href="#configuring-the-mq-dependencies-on-the-heavy-forwarder-s" title="Permalink to this heading">¶</a></h2>
+<p>In the context of the Add-on, Heavy Forwarders are considered as consumers, and will potentially be consuming pending messages stored in the KVstore of the SHC using different concepts of high availability and scope. (applications and regions)</p>
+<p>The first step is to deploy the MQClient librairies, then the q command, the Add-on itself and finally its configuration.</p>
+<section id="mqclient-librairies-installation">
+<h3>MQClient librairies installation<a class="headerlink" href="#mqclient-librairies-installation" title="Permalink to this heading">¶</a></h3>
+<p><strong>For each Splunk Heavy Forwarder that will handle the submission of messages to MQ Series, the first requirement is the deployment of the IBM MQClient which can be downloaded here:</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.ibm.com/support/fixcentral/swg/selectFixes?parent=ibm%2FWebSphere&amp;product=ibm/WebSphere/WebSphere+MQ&amp;release=9.2.1&amp;platform=All&amp;function=fixId&amp;fixids=9.2.2.0-IBM-MQC-LinuxX64&amp;includeSupersedes=0&amp;source=fc">https://www.ibm.com/support/fixcentral/swg/selectFixes?parent=ibm%2FWebSphere&amp;product=ibm/WebSphere/WebSphere+MQ&amp;release=9.2.1&amp;platform=All&amp;function=fixId&amp;fixids=9.2.2.0-IBM-MQC-LinuxX64&amp;includeSupersedes=0&amp;source=fc</a></p></li>
+</ul>
+<p><strong>Once downloaded and uploaded to the server, extract the tarball archive, accept the license and install the packages, example for CentOS / RHEL:</strong></p>
+<p><em>Accept the license first:</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">MQClient</span><span class="o">/</span><span class="n">mqlicense</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p><em>Then install the RPMs:</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rpm</span> <span class="o">-</span><span class="n">Uvh</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">MQClient</span><span class="o">/</span><span class="n">MQ</span><span class="o">*.</span><span class="n">rpm</span>
+</pre></div>
+</div>
+</section>
+<section id="q-command-installation">
+<h3>Q command installation<a class="headerlink" href="#q-command-installation" title="Permalink to this heading">¶</a></h3>
+<p>The Q command is a low level MQ utility which is now a paying product. (See: <a class="reference external" href="https://www.mqgem.com/q.html">https://www.mqgem.com/q.html</a>)</p>
+<p>However, a free to earlier version is available and already in use at DHL for the manual submission to MQ, this binary utility is the one that is going to be used at DHL for the deployment of the application.</p>
+<p>Make sure this command is available on the machine, its path is configurable within the UI of the Add-on, by convention it could be placed in the following directory: (which is the default directory used by the application and the default directory of the MQClient)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">mqm</span>
+</pre></div>
+</div>
+<p>This path can be customised if needed in the configuration UI of the Add-on:</p>
+<a class="reference internal image-reference" href="_images/q_command_path.png"><img alt="q_command_path.png" class="align-center" src="_images/q_command_path.png" style="width: 1200px;" /></a>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="requirements.html" class="btn btn-neutral float-left" title="Requirements" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="configuration.html" class="btn btn-neutral float-right" title="MQ managers Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, DHL.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
