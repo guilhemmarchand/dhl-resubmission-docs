@@ -1,7 +1,7 @@
 HTTP SOAP configuration
 -----------------------
 
-**The configuration of the SOAR HTTP(s) resubmission can be summarized as following:**
+**The configuration of the SOAR HTTP(s) resubmission can be summarised as following:**
 
 - The configuration stands on the Heavy Forwarder consumers via the creation of one or more SOAR API accounts in the ``TA-dhl-http-resubmission`` application
 - A SOAR API account defines the SOAR API target, as well as the authentication information and additional technical information for this account
@@ -102,4 +102,4 @@ Advanced configuration
    * - **Max TPS**
      - The maximum number of MQ transactions per seconds before we start throttling the requests
    * - **Max multi-threads**
-     - The maximum number of concurrent threads, this defines the concurrent multi-threading when performing transactions
+     - The maximum number of concurrent threads, this defines the concurrent multithreading when performing transactions

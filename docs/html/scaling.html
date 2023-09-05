@@ -72,7 +72,6 @@
 <li class="toctree-l1"><a class="reference internal" href="userguide.html">User guide</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="development.html">Development and build process</a></li>
 </ul>
 
@@ -108,16 +107,16 @@
 <li><p>Multithreading at the Python level when processing messages to their destination</p></li>
 <li><p>Batch processing for MQ single line messages</p></li>
 </ul>
-<p><strong>Also, the user interfaces realy on a metadata view of the backlog KVstore collections for a very fast user experience:</strong></p>
+<p><strong>Also, the user interfaces rely on a metadata view of the backlog KVstore collections for a very fast user experience:</strong></p>
 <ul class="simple">
 <li><p>When submitting messages for reprocessing, the messages are stored in a KVstore collection on the Search Head Tier (one collection for HTTP, one for MQ)</p></li>
 <li><p>When dealing with large number of messages, the time needed to operate on the status of the batches would become extremely high and would slightly impact the user experience</p></li>
 <li><p>Therefore, the backend automatically reflect the batches definition into a Metadata KVstore collection, which is what user deal with instead of the whole backlog collections</p></li>
 </ul>
-<p><strong>Finally, the manage batch UI provide quick access to the performance counters, allowing users to easily review the amount of time required to process a batch effectively.</strong></p>
+<p><strong>Finally, the Manage batch UI provides quick access to the performance counters, allowing users to easily review the amount of time required to process a batch effectively.</strong></p>
 <section id="multiple-worker-processes">
 <h2>Multiple worker processes<a class="headerlink" href="#multiple-worker-processes" title="Permalink to this heading">¶</a></h2>
-<p>For each processing Add-on <code class="docutils literal notranslate"><span class="pre">TA-dhl-http-resubmission</span></code> and <code class="docutils literal notranslate"><span class="pre">TA-dhl-mq-resubmission</span></code>, 5 workers processes are configured by default.</p>
+<p>For each processing Add-on <code class="docutils literal notranslate"><span class="pre">TA-dhl-http-resubmission</span></code> and <code class="docutils literal notranslate"><span class="pre">TA-dhl-mq-resubmission</span></code>, 5 worker processes are configured by default.</p>
 <p><strong>These are translated into a scheduled report per application and worker:</strong></p>
 <p><em>For SOAP:</em></p>
 <a class="with-border reference internal image-reference" href="_images/scaling1.png"><img alt="scaling1.png" class="with-border align-center" src="_images/scaling1.png" style="width: 1200px;" /></a>
@@ -128,7 +127,7 @@
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
 <ul class="simple">
-<li><p>Worker instances are scheduled to run every minute such that any pending processes start as soon as possible and in parrallel.</p></li>
+<li><p>Worker instances are scheduled to run every minute such that any pending processes start as soon as possible and in parallel.</p></li>
 <li><p>When the worker process starts, it will verify and load any messages associated with its own worker identifier.</p></li>
 <li><p>When batch of messages are submitted by users, the solution automatically split the messages</p></li>
 </ul>
@@ -140,7 +139,7 @@
 </pre></div>
 </div>
 <a class="with-border reference internal image-reference" href="_images/scaling4.png"><img alt="scaling4.png" class="with-border align-center" src="_images/scaling4.png" style="width: 1200px;" /></a>
-<p>Using this technique, each worker processes its messages independently which slightly optimize the capabilities of fast consuming messages.</p>
+<p>Using this technique, each worker processes its messages independently which slightly optimise the capabilities of fast consuming messages.</p>
 <section id="configuration-of-the-number-of-workers-on-the-frontend-application">
 <h3>Configuration of the number of workers on the frontend application<a class="headerlink" href="#configuration-of-the-number-of-workers-on-the-frontend-application" title="Permalink to this heading">¶</a></h3>
 <p>The number of workers to be used when splitting the messages at the submission phase is configured at the level of the Search Head tier, in the <code class="docutils literal notranslate"><span class="pre">dhl_http_resubmission</span></code> and <code class="docutils literal notranslate"><span class="pre">dhl_mq_resubmission</span></code> applications:</p>
@@ -148,10 +147,10 @@
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
 <ul class="simple">
-<li><p>This number needs to match the number of worker processes configured and enaled on the consumer side in the associated <code class="docutils literal notranslate"><span class="pre">TA_dhl_http_resubmission</span></code> and <code class="docutils literal notranslate"><span class="pre">TA_dhl_mq_resubmission</span></code> Addons</p></li>
-<li><p>Shall we want to decrease the number of workers, update this value and disable the associate workers on the consummers</p></li>
+<li><p>This number needs to match the number of worker processes configured and enabled on the consumer side in the associated <code class="docutils literal notranslate"><span class="pre">TA_dhl_http_resubmission</span></code> and <code class="docutils literal notranslate"><span class="pre">TA_dhl_mq_resubmission</span></code> Addons</p></li>
+<li><p>Shall we want to decrease the number of workers, update this value and disable the associate workers on the consumers</p></li>
 <li><p>On the opposite, shall we want to increase the number of workers, new workers can be created by cloning the report from an existing worker, updating the search and finally updating the number of workers configured</p></li>
-<li><p>If for any reasons, the number of workers configured in this screen does not match the number of enabled workers, messages associated with non existing or enabled workers will not be consummed</p></li>
+<li><p>If for any reasons, the number of workers configured in this screen does not match the number of enabled workers, messages associated with non existing or enabled workers will not be consumed</p></li>
 </ul>
 </div>
 </section>
@@ -165,24 +164,24 @@
 </section>
 <section id="multi-threading">
 <h2>Multi-threading<a class="headerlink" href="#multi-threading" title="Permalink to this heading">¶</a></h2>
-<p>Python backend processing messages are designed to perform these tasks in parrallel using multi-threading, the level of multi-threading is controllable by two options worker together:</p>
+<p>Python backend processing messages are designed to perform these tasks in parallel using multithreading, the level of multi-threading is controllable by two options worker together:</p>
 <ul class="simple">
 <li><p>Max TPS</p></li>
 <li><p>Max Multi-Threads</p></li>
 </ul>
 <a class="with-border reference internal image-reference" href="_images/scaling6.png"><img alt="scaling6.png" class="with-border align-center" src="_images/scaling6.png" style="width: 1200px;" /></a>
-<p>You can fine tune these settings to increase or lower the volume of messages which are being sent in parrallel, increasing these values will eventually increase the back pressure we may impose to the SOAP or MQ backends.</p>
+<p>You can fine tune these settings to increase or lower the volume of messages which are being sent in parallel, increasing these values will eventually increase the back pressure we may impose to the SOAP or MQ backends.</p>
 </section>
 <section id="mq-batch-processing-for-single-line-messages">
 <h2>MQ Batch processing for single line messages<a class="headerlink" href="#mq-batch-processing-for-single-line-messages" title="Permalink to this heading">¶</a></h2>
-<p>For MQ particularly, and if all messages from a batch are single line messages, the default approach is to leverage the <code class="docutils literal notranslate"><span class="pre">q</span></code> command capabilities to process messages in batch.</p>
+<p>For MQ particularly, and if all messages from a batch are single line messages, the default approach is to leverage the <code class="docutils literal notranslate"><span class="pre">q</span></code> command capabilities to process messages in a batch.</p>
 <p>In this case, and this is the default behaviour, messages are stored in a single file and sent as part of a batch send request using the q command argument <code class="docutils literal notranslate"><span class="pre">-F</span></code>.</p>
 <p>This behaviour can be enabled or disabled on the consumer sides in the <code class="docutils literal notranslate"><span class="pre">TA_dhl_mq_resubmission</span></code> Add-on:</p>
 <a class="with-border reference internal image-reference" href="_images/scaling7.png"><img alt="scaling7.png" class="with-border align-center" src="_images/scaling7.png" style="width: 1200px;" /></a>
 </section>
 <section id="metadata-kvstore-collections-for-a-fast-user-experience">
 <h2>Metadata KVstore collections for a fast user experience<a class="headerlink" href="#metadata-kvstore-collections-for-a-fast-user-experience" title="Permalink to this heading">¶</a></h2>
-<p><strong>To optimize the user experience and avoid hitting issues with large volume of messages, the resubmission solution implements a logic of Metadata KVstore, therefore for each application we have in fact two types of KVstore collections:</strong></p>
+<p><strong>To optimise the user experience and avoid hitting issues with large volume of messages, the resubmission solution implements a logic of Metadata KVstore, therefore for each application we have in fact two types of KVstore collections:</strong></p>
 <p><em>For SOAP:</em></p>
 <ul class="simple">
 <li><p>http_publish_backlog</p></li>

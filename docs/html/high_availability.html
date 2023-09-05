@@ -78,13 +78,12 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="rbac.html">Role Based Access Control (RBAC)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reference.html">Administrative Reference matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scaling.html">High Scale Volume</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="userguide.html">User guide</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="development.html">Development and build process</a></li>
 </ul>
 
@@ -122,7 +121,7 @@
 <li><p>The <strong>HA group</strong> is a an identifier configurable in the <code class="docutils literal notranslate"><span class="pre">TA-dhl-resubmission-ha-client</span></code> configuration UI</p></li>
 <li><p>Every consumer sends <strong>keep alive Metadata</strong> to the SHC layer on a regular basis hitting a REST API endpoint hosted by the application <code class="docutils literal notranslate"><span class="pre">dhl-resubmission</span></code>, keep alive Metadata are stored in a KVstore</p></li>
 <li><p>The SHC performs a <strong>manager election per HA group</strong> on a regular basis recycling these keep alive Metadata, by HA group a manager gets elected depending on the conditions</p></li>
-<li><p>Evevy consumer retrieves and <strong>caches the HA groups election Metadata</strong>, and stores in a local KVstore collection</p></li>
+<li><p>Every consumer retrieves and <strong>caches the HA groups election Metadata</strong>, and stores in a local KVstore collection</p></li>
 <li><p>When the consumer sees messages pending from being processed, it verifies which member is the <strong>manager for its HA group</strong> using the local manager cache information</p></li>
 <li><p>If it is the manager for its group, messages are processed, otherwise the consumer remains inactive and does not process the messages</p></li>
 <li><p>When a manager is detected as <strong>offline</strong> based on how long we didn’t get a keep alive, any other online member from the group gets elected</p></li>
@@ -137,7 +136,7 @@
 <a class="with-border reference internal image-reference" href="_images/ha_group1.png"><img alt="ha_group1.png" class="with-border align-center" src="_images/ha_group1.png" style="width: 1200px;" /></a>
 <p><strong>The HA group can be:</strong></p>
 <ul class="simple">
-<li><p>A string identifier of your choice, but using a meanfull naming convention is recommended</p></li>
+<li><p>A string identifier of your choice, but using a meanful naming convention is recommended</p></li>
 <li><p>The HA group should ideally describe the scope and purpose of the consumer, such as the application scopes and regions</p></li>
 <li><p>This is especially true as the Add-on provides analytic and alerting on High Availability, so the HA group is a metadata information allowing you to understand the context</p></li>
 </ul>
@@ -147,7 +146,7 @@
 </section>
 <section id="keep-alive-from-consumers">
 <h2>Keep alive from consumers<a class="headerlink" href="#keep-alive-from-consumers" title="Permalink to this heading">¶</a></h2>
-<p><strong>Every 5 minutes, consumers send Keep Alive Metadata to the SHC using a bearer token based authentification and target defined in the configuration UI of the consumers:</strong></p>
+<p><strong>Every 5 minutes, consumers send Keep Alive Metadata to the SHC using a bearer token based authentication and target defined in the configuration UI of the consumers:</strong></p>
 <a class="with-border reference internal image-reference" href="_images/ha_group3.png"><img alt="ha_group3.png" class="with-border align-center" src="_images/ha_group3.png" style="width: 1000px;" /></a>
 <p>The scheduled report <code class="docutils literal notranslate"><span class="pre">DHL</span> <span class="pre">resubmission</span> <span class="pre">HA</span> <span class="pre">group</span> <span class="pre">-</span> <span class="pre">send</span> <span class="pre">keepalive</span> <span class="pre">consumer</span></code> calls the following command on the Heavy Forwarders:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="n">sendkeepalive</span>
@@ -208,21 +207,21 @@
 <h3>Single node run<a class="headerlink" href="#single-node-run" title="Permalink to this heading">¶</a></h3>
 <p>If the application <code class="docutils literal notranslate"><span class="pre">TA-dhl-resubmission-ha-client</span></code> was installed but not configured (the HA group was left at its default), then the Heavy Forwarder is running in single node mode, and consuming messages will always be granted.</p>
 <p><strong>Consumers will log a message similar to:</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">context</span><span class="o">=</span><span class="s2">&quot;high-availibity&quot;</span><span class="p">,</span> <span class="n">this</span> <span class="n">consumer</span> <span class="ow">is</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">singlenode</span> <span class="n">mode</span><span class="p">,</span> <span class="n">messages</span> <span class="n">consumption</span> <span class="n">will</span> <span class="n">be</span> <span class="n">granted</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">context</span><span class="o">=</span><span class="s2">&quot;high-availability&quot;</span><span class="p">,</span> <span class="n">this</span> <span class="n">consumer</span> <span class="ow">is</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">single</span> <span class="n">node</span> <span class="n">mode</span><span class="p">,</span> <span class="n">messages</span> <span class="n">consumption</span> <span class="n">will</span> <span class="n">be</span> <span class="n">granted</span>
 </pre></div>
 </div>
 </section>
 <section id="elected-manager">
 <h3>Elected manager<a class="headerlink" href="#elected-manager" title="Permalink to this heading">¶</a></h3>
 <p><strong>If the Heavy Forwarder node is currently the elected manager, the consumer will log:</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2023</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">04</span> <span class="mi">08</span><span class="p">:</span><span class="mi">44</span><span class="p">:</span><span class="mi">08</span><span class="p">,</span><span class="mi">247</span> <span class="n">INFO</span> <span class="n">submithttp</span><span class="o">.</span><span class="n">py</span> <span class="n">generate</span> <span class="mi">522</span> <span class="n">worker_id</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="s2">&quot;high-availibity&quot;</span><span class="p">,</span> <span class="n">this</span> <span class="n">consumer</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">elected</span> <span class="n">manager</span> <span class="k">for</span> <span class="n">this</span> <span class="n">group</span><span class="p">,</span> <span class="n">messages</span> <span class="n">consumption</span> <span class="n">will</span> <span class="n">be</span> <span class="n">granted</span><span class="p">,</span> <span class="n">ha_group_name</span><span class="o">=</span><span class="s2">&quot;hagrp001&quot;</span><span class="p">,</span> <span class="n">myhostname</span><span class="o">=</span><span class="s2">&quot;hf1&quot;</span><span class="p">,</span> <span class="n">ha_group_elected_manager</span><span class="o">=</span><span class="s2">&quot;hf1&quot;</span><span class="p">,</span> <span class="n">ha_registered_consumers</span><span class="o">=</span><span class="s2">&quot;hf1,hf2&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2023</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">04</span> <span class="mi">08</span><span class="p">:</span><span class="mi">44</span><span class="p">:</span><span class="mi">08</span><span class="p">,</span><span class="mi">247</span> <span class="n">INFO</span> <span class="n">submithttp</span><span class="o">.</span><span class="n">py</span> <span class="n">generate</span> <span class="mi">522</span> <span class="n">worker_id</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="s2">&quot;high-availability&quot;</span><span class="p">,</span> <span class="n">this</span> <span class="n">consumer</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">elected</span> <span class="n">manager</span> <span class="k">for</span> <span class="n">this</span> <span class="n">group</span><span class="p">,</span> <span class="n">messages</span> <span class="n">consumption</span> <span class="n">will</span> <span class="n">be</span> <span class="n">granted</span><span class="p">,</span> <span class="n">ha_group_name</span><span class="o">=</span><span class="s2">&quot;hagrp001&quot;</span><span class="p">,</span> <span class="n">myhostname</span><span class="o">=</span><span class="s2">&quot;hf1&quot;</span><span class="p">,</span> <span class="n">ha_group_elected_manager</span><span class="o">=</span><span class="s2">&quot;hf1&quot;</span><span class="p">,</span> <span class="n">ha_registered_consumers</span><span class="o">=</span><span class="s2">&quot;hf1,hf2&quot;</span>
 </pre></div>
 </div>
 </section>
 <section id="passive-node">
 <h3>Passive node<a class="headerlink" href="#passive-node" title="Permalink to this heading">¶</a></h3>
 <p><strong>If the Heavy Forwarder node is not currently the elected manager, the consumer will log:</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2023</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">04</span> <span class="mi">09</span><span class="p">:</span><span class="mi">03</span><span class="p">:</span><span class="mi">06</span><span class="p">,</span><span class="mi">676</span> <span class="n">INFO</span> <span class="n">submithttp</span><span class="o">.</span><span class="n">py</span> <span class="n">generate</span> <span class="mi">525</span> <span class="n">worker_id</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="s2">&quot;high-availibity&quot;</span><span class="p">,</span> <span class="n">this</span> <span class="n">consumer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">currently</span> <span class="n">the</span> <span class="n">elected</span> <span class="n">manager</span> <span class="k">for</span> <span class="n">this</span> <span class="n">group</span><span class="p">,</span> <span class="n">messages</span> <span class="n">consumption</span> <span class="n">will</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">granted</span><span class="p">,</span> <span class="n">ha_group_name</span><span class="o">=</span><span class="s2">&quot;hagrp001&quot;</span><span class="p">,</span> <span class="n">myhostname</span><span class="o">=</span><span class="s2">&quot;hf2&quot;</span><span class="p">,</span> <span class="n">ha_group_elected_manager</span><span class="o">=</span><span class="s2">&quot;hf1&quot;</span><span class="p">,</span> <span class="n">ha_registered_consumers</span><span class="o">=</span><span class="s2">&quot;hf1,hf2&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2023</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">04</span> <span class="mi">09</span><span class="p">:</span><span class="mi">03</span><span class="p">:</span><span class="mi">06</span><span class="p">,</span><span class="mi">676</span> <span class="n">INFO</span> <span class="n">submithttp</span><span class="o">.</span><span class="n">py</span> <span class="n">generate</span> <span class="mi">525</span> <span class="n">worker_id</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="s2">&quot;high-availability&quot;</span><span class="p">,</span> <span class="n">this</span> <span class="n">consumer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">currently</span> <span class="n">the</span> <span class="n">elected</span> <span class="n">manager</span> <span class="k">for</span> <span class="n">this</span> <span class="n">group</span><span class="p">,</span> <span class="n">messages</span> <span class="n">consumption</span> <span class="n">will</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">granted</span><span class="p">,</span> <span class="n">ha_group_name</span><span class="o">=</span><span class="s2">&quot;hagrp001&quot;</span><span class="p">,</span> <span class="n">myhostname</span><span class="o">=</span><span class="s2">&quot;hf2&quot;</span><span class="p">,</span> <span class="n">ha_group_elected_manager</span><span class="o">=</span><span class="s2">&quot;hf1&quot;</span><span class="p">,</span> <span class="n">ha_registered_consumers</span><span class="o">=</span><span class="s2">&quot;hf1,hf2&quot;</span>
 </pre></div>
 </div>
 </section>
@@ -233,7 +232,7 @@
 <ul class="simple">
 <li><p>Splunk service is stopped or not operating properly on the consumer for more than 5 minutes</p></li>
 <li><p>It cannot send Keep alive Metadata any longer to the SHC (network issues, authentication issues, etc)</p></li>
-<li><p>A configuration issues on the consumer prevents the normal Keep alive execution (application was uninstalled, reports disaabled etc)</p></li>
+<li><p>A configuration issues on the consumer prevents the normal Keep alive execution (application was uninstalled, reports disabled etc)</p></li>
 </ul>
 <p><strong>The issue is detected within the next 5/10 minutes maximum and another member from the HA group gets elected:</strong></p>
 <a class="with-border reference internal image-reference" href="_images/ha_group8.png"><img alt="ha_group8.png" class="with-border align-center" src="_images/ha_group8.png" style="width: 1000px;" /></a>
@@ -241,7 +240,7 @@
 <li><p>During the time of the manager outage detection which can take up to 10 minutes, we are not consuming messages for the HA group any longer</p></li>
 <li><p>Any pending batch which was approved remains pending until we have at least one online consumer in the HA group</p></li>
 <li><p>When a new manager gets elected, messages start to be processed transparently using the new manager for the group</p></li>
-<li><p>When the issue is fixed on the previsouly elected manager, and it is detected again, the member remains a passive member as long as the current manager remains online</p></li>
+<li><p>When the issue is fixed on the previously elected manager, and it is detected again, the member remains a passive member as long as the current manager remains online</p></li>
 </ul>
 <p><strong>When the member that suffered from an outage is back online, the High Availability dashboard shows its status is back in the pool, the member becomes a valid election candidate again:</strong></p>
 <a class="with-border reference internal image-reference" href="_images/ha_group9.png"><img alt="ha_group9.png" class="with-border align-center" src="_images/ha_group9.png" style="width: 1000px;" /></a>

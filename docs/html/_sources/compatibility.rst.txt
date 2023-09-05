@@ -16,4 +16,4 @@ IBM MQ compatibility
 
 Compatibility has been tested with recent generations of IBM MQ. (Version 9.2.x)
 
-However, it is expected that we can interract with much older versions of MQ with no specific trouble, via the interface of the q command.
+However, it is expected that we can interact with much older versions of MQ with no specific trouble, via the interface of the q command.

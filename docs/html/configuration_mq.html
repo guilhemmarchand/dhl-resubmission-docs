@@ -58,16 +58,13 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="high_availability.html">High Availability</a></li>
-<li class="toctree-l1"><a class="reference internal" href="high_availability.html#send-keep-alive-traces">send keep alive traces</a></li>
-<li class="toctree-l1"><a class="reference internal" href="high_availability.html#consumers-node-verification-traces">consumers node verification traces</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rbac.html">Role Based Access Control (RBAC)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reference.html">Administrative Reference matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scaling.html">High Scale Volume</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="userguide.html">User guide</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="development.html">Development and build process</a></li>
 </ul>
 
@@ -97,7 +94,7 @@
              
   <section id="mq-configuration">
 <h1>MQ configuration<a class="headerlink" href="#mq-configuration" title="Permalink to this heading">¶</a></h1>
-<p><strong>The configuration of the MQ resubmission can be summarized as following:</strong></p>
+<p><strong>The configuration of the MQ resubmission can be summarised as following:</strong></p>
 <ul class="simple">
 <li><p>The Queue managers are created on the Heavy Forwarder consumer nodes as part of an account configuration</p></li>
 <li><p>The account is then referenced as the target when submitting messages to be submitted through MQ</p></li>
@@ -162,13 +159,13 @@
 <td><p>The maximum number of MQ transactions per seconds before we start throttling the requests</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Max multi-threads</strong></p></td>
-<td><p>The maximum number of concurrent threads, this defines the concurrent multi-threading when performing transactions</p></td>
+<td><p>The maximum number of concurrent threads, this defines the concurrent multithreading when performing transactions</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>MQ client path</strong></p></td>
-<td><p>MQ Series client librairies install path.</p></td>
+<td><p>MQSeries client libraries install path.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Q command path</strong></p></td>
-<td><p>Enter the path where the q executable is located, defaults to the same path as the MQ client.</p></td>
+<td><p>Enter the path where the q executable is located, defaulting to the same path as the MQ client.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Q allow mass batch</strong></p></td>
 <td><p>Enable or disable the Q command mass batch behaviour (option -F) which allows sending many messages to MQ in a single operation.</p></td>

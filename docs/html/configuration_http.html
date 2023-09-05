@@ -59,16 +59,13 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="configuration_mq.html">MQ configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="high_availability.html">High Availability</a></li>
-<li class="toctree-l1"><a class="reference internal" href="high_availability.html#send-keep-alive-traces">send keep alive traces</a></li>
-<li class="toctree-l1"><a class="reference internal" href="high_availability.html#consumers-node-verification-traces">consumers node verification traces</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rbac.html">Role Based Access Control (RBAC)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reference.html">Administrative Reference matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scaling.html">High Scale Volume</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="userguide.html">User guide</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="development.html">Development and build process</a></li>
 </ul>
 
@@ -98,7 +95,7 @@
              
   <section id="http-soap-configuration">
 <h1>HTTP SOAP configuration<a class="headerlink" href="#http-soap-configuration" title="Permalink to this heading">¶</a></h1>
-<p><strong>The configuration of the SOAR HTTP(s) resubmission can be summarized as following:</strong></p>
+<p><strong>The configuration of the SOAR HTTP(s) resubmission can be summarised as following:</strong></p>
 <ul class="simple">
 <li><p>The configuration stands on the Heavy Forwarder consumers via the creation of one or more SOAR API accounts in the <code class="docutils literal notranslate"><span class="pre">TA-dhl-http-resubmission</span></code> application</p></li>
 <li><p>A SOAR API account defines the SOAR API target, as well as the authentication information and additional technical information for this account</p></li>
@@ -173,7 +170,7 @@
 <td><p>The maximum number of MQ transactions per seconds before we start throttling the requests</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Max multi-threads</strong></p></td>
-<td><p>The maximum number of concurrent threads, this defines the concurrent multi-threading when performing transactions</p></td>
+<td><p>The maximum number of concurrent threads, this defines the concurrent multithreading when performing transactions</p></td>
 </tr>
 </tbody>
 </table>

@@ -60,7 +60,6 @@
 <li class="toctree-l1"><a class="reference internal" href="userguide.html">User guide</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="development.html">Development and build process</a></li>
 </ul>
 
@@ -92,15 +91,15 @@
 <h1>Welcome to the DHL resubmission documentation<a class="headerlink" href="#welcome-to-the-dhl-resubmission-documentation" title="Permalink to this heading">¶</a></h1>
 <p><strong>The DHL resubmission solution provides services for:</strong></p>
 <ul class="simple">
-<li><p>Publishing on demand any volume of messages to IBM MQ managers or SOAR APIs via HTTPS, in a scalabale, resilient and distributed manner using various Splunk components</p></li>
+<li><p>Publishing on demand any volume of messages to IBM MQ managers or SOAR APIs via HTTPS, in a scalable, resilient and distributed manner using various Splunk components</p></li>
 <li><p>Handling the message life cycle at any point in time with RBAC features</p></li>
-<li><p>Hanlding temporary and permanent failures with automated retries based on a life cycle concept</p></li>
-<li><p>High availability with automated fail-over using multiple Splunk Heavy Fowarders working in a HA group concept</p></li>
+<li><p>Handling temporary and permanent failures with automated retries based on a life cycle concept</p></li>
+<li><p>High availability with automated fail-over using multiple Splunk Heavy Forwarders working in a HA group concept</p></li>
 </ul>
 <p><em>In a nutshell:</em></p>
 <ul class="simple">
-<li><p>For each technlology (MQ and SOAP), there are frontend and backend Splunk applications which are deployed as needed</p></li>
-<li><p>Users interact with the solution with a pre-defined workflow involving different components to create and maintain records in a Splunk distributed KVstore.</p></li>
+<li><p>For each technology (MQ and SOAP), there are frontend and backend Splunk applications which are deployed as needed</p></li>
+<li><p>Users interact with the solution with a predefined workflow involving different components to create and maintain records in a Splunk distributed KVstore.</p></li>
 <li><p>The KVstore records contain the message payloads in addition with various Metadata such as the application name, the region, MQ/SOAP related information (managers, queues. Etc), statuses, user requesting information.</p></li>
 <li><p>By nature, the KVstore is automatically replicated amongst the SHC members and is available on all DHL deployed sites.</p></li>
 <li><p>A number of Splunk Heavy Forwarders are deployed on a per site basis and leverage the Splunk API to retrieve and maintain the KVstore records with configurable filtering rules which allow dedicating a single Heavy Forwarder to consume the records it is responsible for.</p></li>
@@ -120,7 +119,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="requirements.html#mq-client-librairies">MQ Client librairies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="requirements.html#mq-client-libraries">MQ Client libraries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="requirements.html#q-command">q command</a></li>
 <li class="toctree-l2"><a class="reference internal" href="requirements.html#splunk-api-communication-between-the-heavy-forwarders-and-the-shc-members">Splunk API communication between the Heavy Forwarders and the SHC members</a></li>
 </ul>
@@ -189,15 +188,18 @@
 <h1>User guide:<a class="headerlink" href="#user-guide" title="Permalink to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="userguide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userguide.html">User guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="userguide.html#submitting-messages-to-soap-and-mq-series">Submitting messages to SOAP and MQ-Series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide.html#message-publication-life-cycle-and-automated-re-attempts">Message publication life cycle and automated re-attempts</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
-<section id="versions-build-history-and-development">
-<h1>Versions, build history and development:<a class="headerlink" href="#versions-build-history-and-development" title="Permalink to this heading">¶</a></h1>
+<section id="development">
+<h1>Development:<a class="headerlink" href="#development" title="Permalink to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="development.html">Development and build process</a></li>
 </ul>
 </div>

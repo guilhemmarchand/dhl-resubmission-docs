@@ -5,15 +5,15 @@ Welcome to the DHL resubmission documentation
 
 **The DHL resubmission solution provides services for:**
 
-- Publishing on demand any volume of messages to IBM MQ managers or SOAR APIs via HTTPS, in a scalabale, resilient and distributed manner using various Splunk components
+- Publishing on demand any volume of messages to IBM MQ managers or SOAR APIs via HTTPS, in a scalable, resilient and distributed manner using various Splunk components
 - Handling the message life cycle at any point in time with RBAC features
-- Hanlding temporary and permanent failures with automated retries based on a life cycle concept
-- High availability with automated fail-over using multiple Splunk Heavy Fowarders working in a HA group concept
+- Handling temporary and permanent failures with automated retries based on a life cycle concept
+- High availability with automated fail-over using multiple Splunk Heavy Forwarders working in a HA group concept
 
 *In a nutshell:*
 
-- For each technlology (MQ and SOAP), there are frontend and backend Splunk applications which are deployed as needed
-- Users interact with the solution with a pre-defined workflow involving different components to create and maintain records in a Splunk distributed KVstore.
+- For each technology (MQ and SOAP), there are frontend and backend Splunk applications which are deployed as needed
+- Users interact with the solution with a predefined workflow involving different components to create and maintain records in a Splunk distributed KVstore.
 - The KVstore records contain the message payloads in addition with various Metadata such as the application name, the region, MQ/SOAP related information (managers, queues. Etc), statuses, user requesting information.
 - By nature, the KVstore is automatically replicated amongst the SHC members and is available on all DHL deployed sites.
 - A number of Splunk Heavy Forwarders are deployed on a per site basis and leverage the Splunk API to retrieve and maintain the KVstore records with configurable filtering rules which allow dedicating a single Heavy Forwarder to consume the records it is responsible for.
@@ -51,11 +51,10 @@ User guide:
 
    userguide
 
-Versions, build history and development:
-========================================
+Development:
+============
 
 .. toctree::
    :maxdepth: 1
 
-   releasenotes
    development

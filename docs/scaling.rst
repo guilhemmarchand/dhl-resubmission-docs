@@ -7,18 +7,18 @@ High Scale Volume
 - Multithreading at the Python level when processing messages to their destination
 - Batch processing for MQ single line messages
 
-**Also, the user interfaces realy on a metadata view of the backlog KVstore collections for a very fast user experience:**
+**Also, the user interfaces rely on a metadata view of the backlog KVstore collections for a very fast user experience:**
 
 - When submitting messages for reprocessing, the messages are stored in a KVstore collection on the Search Head Tier (one collection for HTTP, one for MQ)
 - When dealing with large number of messages, the time needed to operate on the status of the batches would become extremely high and would slightly impact the user experience
 - Therefore, the backend automatically reflect the batches definition into a Metadata KVstore collection, which is what user deal with instead of the whole backlog collections
 
-**Finally, the manage batch UI provide quick access to the performance counters, allowing users to easily review the amount of time required to process a batch effectively.**
+**Finally, the Manage batch UI provides quick access to the performance counters, allowing users to easily review the amount of time required to process a batch effectively.**
 
 Multiple worker processes
 =========================
 
-For each processing Add-on ``TA-dhl-http-resubmission`` and ``TA-dhl-mq-resubmission``, 5 workers processes are configured by default.
+For each processing Add-on ``TA-dhl-http-resubmission`` and ``TA-dhl-mq-resubmission``, 5 worker processes are configured by default.
 
 **These are translated into a scheduled report per application and worker:**
 
@@ -48,7 +48,7 @@ Each worker is in fact an instance of the backend with its schedule and specifyi
 
 .. hint::
 
-    - Worker instances are scheduled to run every minute such that any pending processes start as soon as possible and in parrallel.
+    - Worker instances are scheduled to run every minute such that any pending processes start as soon as possible and in parallel.
     - When the worker process starts, it will verify and load any messages associated with its own worker identifier.
     - When batch of messages are submitted by users, the solution automatically split the messages 
 
@@ -67,7 +67,7 @@ Each worker is in fact an instance of the backend with its schedule and specifyi
    :width: 1200px
    :class: with-border
 
-Using this technique, each worker processes its messages independently which slightly optimize the capabilities of fast consuming messages.
+Using this technique, each worker processes its messages independently which slightly optimise the capabilities of fast consuming messages.
 
 Configuration of the number of workers on the frontend application
 ------------------------------------------------------------------
@@ -82,10 +82,10 @@ The number of workers to be used when splitting the messages at the submission p
 
 .. hint::
 
-    - This number needs to match the number of worker processes configured and enaled on the consumer side in the associated ``TA_dhl_http_resubmission`` and ``TA_dhl_mq_resubmission`` Addons
-    - Shall we want to decrease the number of workers, update this value and disable the associate workers on the consummers
+    - This number needs to match the number of worker processes configured and enabled on the consumer side in the associated ``TA_dhl_http_resubmission`` and ``TA_dhl_mq_resubmission`` Addons
+    - Shall we want to decrease the number of workers, update this value and disable the associate workers on the consumers
     - On the opposite, shall we want to increase the number of workers, new workers can be created by cloning the report from an existing worker, updating the search and finally updating the number of workers configured
-    - If for any reasons, the number of workers configured in this screen does not match the number of enabled workers, messages associated with non existing or enabled workers will not be consummed
+    - If for any reasons, the number of workers configured in this screen does not match the number of enabled workers, messages associated with non existing or enabled workers will not be consumed
 
 Worker processes in the logs
 ----------------------------
@@ -99,7 +99,7 @@ When a consumer worker process messages, logs will automatically associate the o
 Multi-threading
 ===============
 
-Python backend processing messages are designed to perform these tasks in parrallel using multi-threading, the level of multi-threading is controllable by two options worker together:
+Python backend processing messages are designed to perform these tasks in parallel using multithreading, the level of multi-threading is controllable by two options worker together:
 
 - Max TPS
 - Max Multi-Threads
@@ -110,12 +110,12 @@ Python backend processing messages are designed to perform these tasks in parral
    :width: 1200px
    :class: with-border
 
-You can fine tune these settings to increase or lower the volume of messages which are being sent in parrallel, increasing these values will eventually increase the back pressure we may impose to the SOAP or MQ backends.
+You can fine tune these settings to increase or lower the volume of messages which are being sent in parallel, increasing these values will eventually increase the back pressure we may impose to the SOAP or MQ backends.
 
 MQ Batch processing for single line messages
 ============================================
 
-For MQ particularly, and if all messages from a batch are single line messages, the default approach is to leverage the ``q`` command capabilities to process messages in batch.
+For MQ particularly, and if all messages from a batch are single line messages, the default approach is to leverage the ``q`` command capabilities to process messages in a batch.
 
 In this case, and this is the default behaviour, messages are stored in a single file and sent as part of a batch send request using the q command argument ``-F``.
 
@@ -130,7 +130,7 @@ This behaviour can be enabled or disabled on the consumer sides in the ``TA_dhl_
 Metadata KVstore collections for a fast user experience
 =======================================================
 
-**To optimize the user experience and avoid hitting issues with large volume of messages, the resubmission solution implements a logic of Metadata KVstore, therefore for each application we have in fact two types of KVstore collections:**
+**To optimise the user experience and avoid hitting issues with large volume of messages, the resubmission solution implements a logic of Metadata KVstore, therefore for each application we have in fact two types of KVstore collections:**
 
 *For SOAP:*
 

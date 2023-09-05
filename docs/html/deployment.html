@@ -18,7 +18,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="MQ managers Configuration" href="configuration.html" />
+    <link rel="next" title="HTTP SOAP configuration" href="configuration_http.html" />
     <link rel="prev" title="Requirements" href="requirements.html" /> 
 </head>
 
@@ -59,22 +59,22 @@
 <li class="toctree-l2"><a class="reference internal" href="#bearer-token-requirements">Bearer Token requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#configuring-the-connectivity-from-the-heavy-forwarders-to-the-search-head-tier">Configuring the connectivity from the Heavy Forwarders to the Search Head tier</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#configuring-the-mq-dependencies-on-the-heavy-forwarder-s">Configuring the MQ dependencies on the Heavy Forwarder(s)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#mqclient-librairies-installation">MQClient librairies installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mqclient-libraries-installation">MQClient libraries installation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#q-command-installation">Q command installation</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">MQ managers Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration_http.html">HTTP SOAP configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration_mq.html">MQ configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="high_availability.html">High Availability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rbac.html">Role Based Access Control (RBAC)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reference.html">Administrative Reference matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scaling.html">High Scale Volume</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="userguide.html">User guide</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="development.html">Development and build process</a></li>
 </ul>
 
@@ -106,7 +106,7 @@
 <h1>Deployment and base configuration<a class="headerlink" href="#deployment-and-base-configuration" title="Permalink to this heading">¶</a></h1>
 <section id="deployment-matrix">
 <h2>Deployment Matrix<a class="headerlink" href="#deployment-matrix" title="Permalink to this heading">¶</a></h2>
-<p>The solution is composed by 6 Splunk applications, 3 frontend applications and 2 backend applications.</p>
+<p>The solution is composed of 6 Splunk applications, 3 frontend applications and 3 backend applications.</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Application</p></th>
@@ -218,15 +218,15 @@
 <section id="configuring-the-mq-dependencies-on-the-heavy-forwarder-s">
 <h2>Configuring the MQ dependencies on the Heavy Forwarder(s)<a class="headerlink" href="#configuring-the-mq-dependencies-on-the-heavy-forwarder-s" title="Permalink to this heading">¶</a></h2>
 <p>In the context of the Add-on, Heavy Forwarders are considered as consumers, and will potentially be consuming pending messages stored in the KVstore of the SHC using different concepts of high availability and scope. (applications and regions)</p>
-<p>The first step is to deploy the MQClient librairies, then the q command, the Add-on itself and finally its configuration.</p>
-<section id="mqclient-librairies-installation">
-<h3>MQClient librairies installation<a class="headerlink" href="#mqclient-librairies-installation" title="Permalink to this heading">¶</a></h3>
+<p>The first step is to deploy the MQClient libraries, then the q command, the Add-on itself and finally its configuration.</p>
+<section id="mqclient-libraries-installation">
+<h3>MQClient libraries installation<a class="headerlink" href="#mqclient-libraries-installation" title="Permalink to this heading">¶</a></h3>
 <p><strong>For each Splunk Heavy Forwarder that will handle the submission of messages to MQ Series, the first requirement is the deployment of the IBM MQClient which can be downloaded here:</strong></p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.ibm.com/support/fixcentral/swg/selectFixes?parent=ibm%2FWebSphere&amp;product=ibm/WebSphere/WebSphere+MQ&amp;release=9.2.1&amp;platform=All&amp;function=fixId&amp;fixids=9.2.2.0-IBM-MQC-LinuxX64&amp;includeSupersedes=0&amp;source=fc">https://www.ibm.com/support/fixcentral/swg/selectFixes?parent=ibm%2FWebSphere&amp;product=ibm/WebSphere/WebSphere+MQ&amp;release=9.2.1&amp;platform=All&amp;function=fixId&amp;fixids=9.2.2.0-IBM-MQC-LinuxX64&amp;includeSupersedes=0&amp;source=fc</a></p></li>
 </ul>
-<p><strong>Once downloaded and uploaded to the server, extract the tarball archive, accept the license and install the packages, example for CentOS / RHEL:</strong></p>
-<p><em>Accept the license first:</em></p>
+<p><strong>Once downloaded and uploaded to the server, extract the tarball archive, accept the licence and install the packages, example for CentOS / RHEL:</strong></p>
+<p><em>Accept the licence first:</em></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">MQClient</span><span class="o">/</span><span class="n">mqlicense</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
@@ -254,7 +254,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="requirements.html" class="btn btn-neutral float-left" title="Requirements" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="configuration.html" class="btn btn-neutral float-right" title="MQ managers Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="configuration_http.html" class="btn btn-neutral float-right" title="HTTP SOAP configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

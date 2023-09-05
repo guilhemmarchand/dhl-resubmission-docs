@@ -61,7 +61,7 @@ ucc-gen and updating applications
 MQ developments with Docker
 ===========================
 
-**For easy and modern developping purposes, one can easily bootstrap an environment including Splunk and MQ-Series using docker, for your convenience, a docker-compose.yml example is shared as follows:**
+**For easy and modern development purposes, one can easily bootstrap an environment including Splunk and MQ-Series using docker, for your convenience, a docker-compose.yml example is shared as follows:**
 
 *docker-compose.yml, adapt to your needs, create or remove local storage references as needed:*
 
@@ -94,10 +94,31 @@ MQ developments with Docker
     volumes:
     qm1data: {}
 
+Allow MQ publish:
+
+::
+
+    docker compose exec mq1 /bin/bash
+    
+::
+
+    /opt/mqm/bin/runmqsc
+
+Then:
+
+::
+
+    SET CHLAUTH('DEV.APP.SVRCONN') TYPE(BLOCKUSER) USERLIST(ALLOWANY)
+
+    REFRESH SECURITY TYPE(CONNAUTH)
+
+    SET CHLAUTH('DEV.APP.SVRCONN') TYPE(BLOCKUSER) USERLIST(ALLOWANY)
+    REFRESH SECURITY TYPE(CONNAUTH)
+
 SOAP API developments
 =====================
 
-**The following Docker configuration were used to bootstap a SOAP API, with an nginx reverse proxy for the SSL layer:**
+**The following Docker configuration were used to bootstrap a SOAP API, with an nginx reverse proxy for the SSL layer:**
 
 ::
 
@@ -232,4 +253,4 @@ nginx/
     }
     }
 
-Finally, the ssl.cert and ssl.key are simply self-signed SSL certificate and no passphase private key created for the purpose of the SSL layer.
+Finally, the ssl.cert and ssl.key are simply self-signed SSL certificates and no passphrase private key created for the purpose of the SSL layer.

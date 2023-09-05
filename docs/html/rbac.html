@@ -18,7 +18,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Administrative Reference matrix" href="reference.html" />
+    <link rel="next" title="High Scale Volume" href="scaling.html" />
     <link rel="prev" title="High Availability" href="high_availability.html" /> 
 </head>
 
@@ -70,13 +70,12 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="reference.html">Administrative Reference matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scaling.html">High Scale Volume</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="userguide.html">User guide</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="development.html">Development and build process</a></li>
 </ul>
 
@@ -108,8 +107,8 @@
 <h1>Role Based Access Control (RBAC)<a class="headerlink" href="#role-based-access-control-rbac" title="Permalink to this heading">¶</a></h1>
 <section id="builtin-roles">
 <h2>Builtin roles<a class="headerlink" href="#builtin-roles" title="Permalink to this heading">¶</a></h2>
-<p><strong>The application embedds different roles as part of its configuration, which would used via inheritance to provide access and permissions to the application and its sub-components.</strong></p>
-<p><strong>The emebedded roles are:</strong></p>
+<p><strong>The application contains different roles as part of its configuration, which would be used via inheritance to provide access and permissions to the application and its sub-components.</strong></p>
+<p><strong>The embedded roles are:</strong></p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Role</p></th>
@@ -144,7 +143,7 @@
 </ul>
 <p><strong>These roles provides:</strong></p>
 <ul class="simple">
-<li><p>Access to frontend custom commands allowing to interract with the applications (such as calling the putmqrelay / puthttprelay commands to submit messages)</p></li>
+<li><p>Access to frontend custom commands allowing to interact with the applications (such as calling the putmqrelay / puthttprelay commands to submit messages)</p></li>
 <li><p>Access with write permission to the related KVstore collections and any other Splunk Knowledge objects needed</p></li>
 </ul>
 </section>
@@ -194,13 +193,13 @@ Messages will be processed to the destination as soon as the batches have been a
 <li><p>Inheritance is not supported</p></li>
 <li><p>The association with a given application is made by extracting the application name from the convention</p></li>
 <li><p>Backends verify the user role membership to allow or deny the operation</p></li>
-<li><p>Finally, roles are lower case only, therefore the application names are systematically converted to lower case</p></li>
+<li><p>Finally, roles are lower case only, therefore the application names are systematically converted to lowercase</p></li>
 </ul>
 </div>
 </section>
 <section id="superadmin-roles">
 <h2>Superadmin roles<a class="headerlink" href="#superadmin-roles" title="Permalink to this heading">¶</a></h2>
-<p>In addition, the super admin roles allow a user member of it to submit and manage any kind of message, no matter the associated application.</p>
+<p>In addition, the super admin roles allow a user member to submit and manage any kind of message, no matter the associated application.</p>
 <p><em>For MQ:</em></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">mqsubmission_superadmin</span></code></p></li>
@@ -214,7 +213,7 @@ Messages will be processed to the destination as soon as the batches have been a
 <h2>RBAC by the example<a class="headerlink" href="#rbac-by-the-example" title="Permalink to this heading">¶</a></h2>
 <p>For the purpose of the documentation, we have two users:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">jsmith</span></code> who is a submiter user for an application named “ESB”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jsmith</span></code> who is a submitter user for an application named “ESB”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">jdoe</span></code> who is an approver user for that same application</p></li>
 </ul>
 <section id="submitting-example">
@@ -255,7 +254,7 @@ Messages will be processed to the destination as soon as the batches have been a
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="high_availability.html" class="btn btn-neutral float-left" title="High Availability" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="reference.html" class="btn btn-neutral float-right" title="Administrative Reference matrix" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="scaling.html" class="btn btn-neutral float-right" title="High Scale Volume" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

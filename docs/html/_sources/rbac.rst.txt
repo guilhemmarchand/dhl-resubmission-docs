@@ -4,9 +4,9 @@ Role Based Access Control (RBAC)
 Builtin roles
 =============
 
-**The application embedds different roles as part of its configuration, which would used via inheritance to provide access and permissions to the application and its sub-components.**
+**The application contains different roles as part of its configuration, which would be used via inheritance to provide access and permissions to the application and its sub-components.**
 
-**The emebedded roles are:**
+**The embedded roles are:**
 
 .. list-table::
    :header-rows: 1
@@ -37,7 +37,7 @@ Based permissions to submit and approve messages
 
 **These roles provides:**
 
-- Access to frontend custom commands allowing to interract with the applications (such as calling the putmqrelay / puthttprelay commands to submit messages)
+- Access to frontend custom commands allowing to interact with the applications (such as calling the putmqrelay / puthttprelay commands to submit messages)
 - Access with write permission to the related KVstore collections and any other Splunk Knowledge objects needed
 
 Providing RBAC access for submitters
@@ -84,12 +84,12 @@ Messages will be processed to the destination as soon as the batches have been a
    - Inheritance is not supported
    - The association with a given application is made by extracting the application name from the convention
    - Backends verify the user role membership to allow or deny the operation
-   - Finally, roles are lower case only, therefore the application names are systematically converted to lower case
+   - Finally, roles are lower case only, therefore the application names are systematically converted to lowercase
    
 Superadmin roles
 ================
 
-In addition, the super admin roles allow a user member of it to submit and manage any kind of message, no matter the associated application.
+In addition, the super admin roles allow a user member to submit and manage any kind of message, no matter the associated application.
 
 *For MQ:*
 
@@ -104,7 +104,7 @@ RBAC by the example
 
 For the purpose of the documentation, we have two users:
 
-- ``jsmith`` who is a submiter user for an application named "ESB"
+- ``jsmith`` who is a submitter user for an application named "ESB"
 - ``jdoe`` who is an approver user for that same application
 
 Submitting example

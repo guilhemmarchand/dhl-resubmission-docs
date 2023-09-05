@@ -48,7 +48,7 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="compatibility.html">Compatibility</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Requirements</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#mq-client-librairies">MQ Client librairies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mq-client-libraries">MQ Client libraries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#q-command">q command</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#splunk-api-communication-between-the-heavy-forwarders-and-the-shc-members">Splunk API communication between the Heavy Forwarders and the SHC members</a></li>
 </ul>
@@ -56,16 +56,16 @@
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="deployment.html">Deployment and base configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">MQ managers Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration_http.html">HTTP SOAP configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration_mq.html">MQ configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="high_availability.html">High Availability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rbac.html">Role Based Access Control (RBAC)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reference.html">Administrative Reference matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scaling.html">High Scale Volume</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="userguide.html">User guide</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="development.html">Development and build process</a></li>
 </ul>
 
@@ -95,29 +95,29 @@
              
   <section id="requirements">
 <h1>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading">¶</a></h1>
-<section id="mq-client-librairies">
-<h2>MQ Client librairies<a class="headerlink" href="#mq-client-librairies" title="Permalink to this heading">¶</a></h2>
-<p>The MQ client librairies are required on the Splunk instances acting as the consumers of the messages, these are the Splunk Heavy Forwarders.</p>
+<section id="mq-client-libraries">
+<h2>MQ Client libraries<a class="headerlink" href="#mq-client-libraries" title="Permalink to this heading">¶</a></h2>
+<p>The MQ client libraries are required on the Splunk instances acting as the consumers of the messages, these are the Splunk Heavy Forwarders.</p>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p>The MQ client librairies are not required on the Splunk Search Head layer</p>
+<p>The MQ client libraries are not required on the Splunk Search Head layer</p>
 </div>
 <p>See the installation procedure.</p>
 </section>
 <section id="q-command">
 <h2>q command<a class="headerlink" href="#q-command" title="Permalink to this heading">¶</a></h2>
-<p>The “Q” command (called mqgem) is the interface we use to interract with IBM MQ series.</p>
-<p>This binary is provided by DHL and allows especially to mass submit messages to IBM MQ in a simple and effiscient manner.</p>
-<p>The Q command in its latest verions requires a license, to be provided by DHL, an older free version can as well be used.</p>
+<p>The “Q” command (called mqgem) is the interface we use to interact with IBM MQ series.</p>
+<p>This binary is provided by DHL and allows especially to mass submit messages to IBM MQ in a simple and efficient manner.</p>
+<p>The Q command in its latest version requires a licence, to be provided by DHL, an older free version can as well be used.</p>
 <p>The “Q” command has to be made available on the Splunk instances consuming the messages (Splunk Heavy Forwarders).</p>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p>The Q command access path is configurable in the Add-on, it can be installed in the same directory than mqm (MQ librairies), but it doesn’t have to be</p>
+<p>The Q command access path is configurable in the Add-on, it can be installed in the same directory than mqm (MQ libraries), but it doesn’t have to be</p>
 </div>
 </section>
 <section id="splunk-api-communication-between-the-heavy-forwarders-and-the-shc-members">
 <h2>Splunk API communication between the Heavy Forwarders and the SHC members<a class="headerlink" href="#splunk-api-communication-between-the-heavy-forwarders-and-the-shc-members" title="Permalink to this heading">¶</a></h2>
-<p><strong>To retrieve and handle the KVstore records, the Heavy Forwarders require to use a bearer token to be configured on the SHC.</strong></p>
+<p><strong>To retrieve and handle the KVstore records, the Heavy Forwarders require a bearer token to be configured on the SHC.</strong></p>
 <p><em>For more information about bearer tokens:</em>
 - <a class="reference external" href="https://docs.splunk.com/Documentation/Splunk/latest/Security/UseAuthTokens">https://docs.splunk.com/Documentation/Splunk/latest/Security/UseAuthTokens</a></p>
 <p>Note: technically each forwarder can use a different bearer token which is configurable in the Add-on configuration UI of the HF, you may as well use the same bearer token on all Heavy Forwarder for that particular context.</p>

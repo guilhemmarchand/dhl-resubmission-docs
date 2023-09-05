@@ -1,7 +1,7 @@
 MQ configuration
 ----------------
 
-**The configuration of the MQ resubmission can be summarized as following:**
+**The configuration of the MQ resubmission can be summarised as following:**
 
 - The Queue managers are created on the Heavy Forwarder consumer nodes as part of an account configuration
 - The account is then referenced as the target when submitting messages to be submitted through MQ
@@ -72,11 +72,10 @@ Advanced configuration
    * - **Max TPS**
      - The maximum number of MQ transactions per seconds before we start throttling the requests
    * - **Max multi-threads**
-     - The maximum number of concurrent threads, this defines the concurrent multi-threading when performing transactions
+     - The maximum number of concurrent threads, this defines the concurrent multithreading when performing transactions
    * - **MQ client path**
-     - MQ Series client librairies install path.
+     - MQSeries client libraries install path.
    * - **Q command path**
-     - Enter the path where the q executable is located, defaults to the same path as the MQ client.
+     - Enter the path where the q executable is located, defaulting to the same path as the MQ client.
    * - **Q allow mass batch**
      - Enable or disable the Q command mass batch behaviour (option -F) which allows sending many messages to MQ in a single operation.
-

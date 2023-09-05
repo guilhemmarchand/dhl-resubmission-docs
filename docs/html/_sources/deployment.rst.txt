@@ -4,7 +4,7 @@ Deployment and base configuration
 Deployment Matrix
 =================
 
-The solution is composed by 6 Splunk applications, 3 frontend applications and 2 backend applications.
+The solution is composed of 6 Splunk applications, 3 frontend applications and 3 backend applications.
 
 .. list-table::
    :header-rows: 1
@@ -134,18 +134,18 @@ Configuring the MQ dependencies on the Heavy Forwarder(s)
 
 In the context of the Add-on, Heavy Forwarders are considered as consumers, and will potentially be consuming pending messages stored in the KVstore of the SHC using different concepts of high availability and scope. (applications and regions)
 
-The first step is to deploy the MQClient librairies, then the q command, the Add-on itself and finally its configuration.
+The first step is to deploy the MQClient libraries, then the q command, the Add-on itself and finally its configuration.
 
-MQClient librairies installation
+MQClient libraries installation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **For each Splunk Heavy Forwarder that will handle the submission of messages to MQ Series, the first requirement is the deployment of the IBM MQClient which can be downloaded here:**
 
 - https://www.ibm.com/support/fixcentral/swg/selectFixes?parent=ibm%2FWebSphere&product=ibm/WebSphere/WebSphere+MQ&release=9.2.1&platform=All&function=fixId&fixids=9.2.2.0-IBM-MQC-LinuxX64&includeSupersedes=0&source=fc
 
-**Once downloaded and uploaded to the server, extract the tarball archive, accept the license and install the packages, example for CentOS / RHEL:**
+**Once downloaded and uploaded to the server, extract the tarball archive, accept the licence and install the packages, example for CentOS / RHEL:**
 
-*Accept the license first:*
+*Accept the licence first:*
 
 ::
 
